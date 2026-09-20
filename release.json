@@ -1,6 +1,6 @@
 {
   "version": "0.6.1-atlantis-fullsite",
-  "source_commit": "bc5cdd61e5e84e8dd603c8413c9b3101a16629f3",
+  "source_commit": "e2435fa3a1f7b780ea5f40b7e5caae9212ec42fc",
   "pages": [
     "home",
     "explore",
@@ -18,7 +18,7 @@
   "sources": 20,
   "artworks": 9,
   "files": {
-    "about.html": "60da021ea3da9edd82b299942f468ef08d464d47794ef51e99b4e348b96e991d",
+    "about.html": "9d802ee60fdd0864e48b791495e3dbbb0cfe8e19476090cecba0313132301d67",
     "assets/art/basics-web.webp": "5038e4d8f68a73ea4f8651e73ee086ce92d13419d5bfe91e37fc831a48572b58",
     "assets/art/community-web.webp": "14c8013cd474decf580847a4ed9d1b3dcaec664df5d4c8b4ccc9e55b06368aa9",
     "assets/art/entanglement-web.webp": "ea6e5b44ec1aec0d0fecf4437a77063f68ed93068a3c1863e27a3483b406fe46",
@@ -30,16 +30,16 @@
     "assets/art/play-web.webp": "1c934f364f436f089b533b393eb04e0a9b4a1cc548479b8098016e104f85497e",
     "assets/art/stories-web.webp": "7bf3a35d2df901300b57d9461aadd54af34f3f7358b4fcb1a902c8f23cfe3f8e",
     "assets/art/web-manifest.json": "994f83f68f9c667f83dc817a1c48d86dae8ef109770791b0bedcfcfe143a70f1",
-    "community.html": "fb579fec44c6af0b72fd101d1a2ca848d7d7d445ceb6947ed3c20b6364579a5a",
-    "entanglement.html": "98c5d0ca178355fb836521ba5b280c24b99634ebe3ef7dd007d94f97ad0ec1d2",
-    "explore.html": "e39f7bb62c03ac9d02fb154ea90c979f36d3efd7e763d66b10710877fc5c5b8d",
-    "index.html": "45ef70722ceccbae4c6faa98f454577067353f947ee485a434549521ad447f7b",
-    "journey.html": "145dbd3b81345b2de14f79cb3eeee2f42b7e18cc86ee96383784d6570fc31c86",
-    "lab.html": "7240ec8961e18c00ecd39b78ee5a60f0928c9e815b5d34eed8c1bca1e560c0c5",
-    "mind.html": "e9e9842e5a53d544529aeb1861d5b582774a810877ff3912ec56018d09fdff6e",
-    "play.html": "02e172e2ee657d8b344292d9e31178fdfd9aed4ee6f6df3c40132635c02d90d2",
-    "sources.html": "7155859a80209961ead2e66adbbbc9265084c920dd3459aaf34c68e4d1599c40",
-    "stories.html": "7531ee414be8c643d1c4bf6f4c53fc1d7222e3e77a3741c438be98fac47cc0c1"
+    "community.html": "de96b9680757a10dba86d9ae2252ed48c27c233e458d673020788496d5c1b767",
+    "entanglement.html": "d0eb90336f05f986c248fc2b64cee59979b9de921a575b86ed370441c0be7a0d",
+    "explore.html": "3209a4c0f86dfd36b1e2097bd75a940d35213716c548bff849460645e9cb539d",
+    "index.html": "9876a47cd133b448d3484723ea7b480ea78f6ae92c84031df10869f801180ef8",
+    "journey.html": "1c84d55e103f0c349541845abefe60af14ad68476820cc691509ee48673d6416",
+    "lab.html": "0984e82696a2ac83d2e910157be56b7c046dcc286cdd0179f325a0c4ab4efba5",
+    "mind.html": "db65fce190f0d18f68e1fa0507518c073acd5d4a6594f8991109cf6e291cdca0",
+    "play.html": "3cc4706cb0563e1edc3ff74cacd486481f4e024197143005e935d5c9aed4b9d0",
+    "sources.html": "4c0e1c50af68c7926b1a14995ccd469f8533cdffd530f10cc4c4c68a08edcb41",
+    "stories.html": "a9ab8b8f085868872a690e3d1a9f0692af9a851c9c083154ca870c4676336df5"
   },
   "deployment_metadata": [
     ".nojekyll",
