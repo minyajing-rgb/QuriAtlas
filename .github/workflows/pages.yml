@@ -5,9 +5,10 @@ on:
     paths:
       - 'site/**'
       - 'data/**'
-      - 'assets/**'
+      - 'assets/art/**'
       - 'build.py'
       - 'tests/**'
+      - 'CNAME'
       - '.github/workflows/pages.yml'
   workflow_dispatch:
 permissions:
@@ -17,7 +18,6 @@ permissions:
 concurrency:
   group: quriatlas-pages
   cancel-in-progress: true
-
 jobs:
   build-test-deploy:
     runs-on: ubuntu-latest
@@ -27,104 +27,83 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v6
-
-      - name: Build standalone HTML
+      - name: Build eleven pages with approved native-resolution art
         run: |
           python build.py
           node --check site/app.js
-
+          node --check site/release.js
+          python -m py_compile tests/e2e.py
       - name: Install browser QA
         run: |
           python -m pip install 'playwright==1.57.0'
           python -m playwright install --with-deps chromium
-
-      - name: Verify local HTTP build
+      - name: Verify every page and interactive feature locally
         run: |
-          python -m http.server 8080 > /tmp/quriatlas-http.log 2>&1 &
+          python -m http.server 8080 --directory build/public >/tmp/quriatlas-http.log 2>&1 &
           SERVER_PID=$!
           trap 'kill "$SERVER_PID" 2>/dev/null || true' EXIT
+          sleep 2
           python tests/e2e.py --url http://127.0.0.1:8080/ --out build/qa-local
-
-      - name: Archive generated HTML in repository
+      - name: Archive tested public pages
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add index.html
+          git add index.html explore.html lab.html mind.html stories.html play.html community.html journey.html sources.html about.html entanglement.html release.json
           if ! git diff --cached --quiet; then
-            git commit -m 'build: archive tested QuriAtlas HTML'
+            git commit -m 'build: publish eleven native-art bilingual pages v0.6.0'
             git pull --rebase origin main
             git push origin HEAD:main
           fi
-
-      - name: Stage public site only
-        run: |
-          rm -rf build/public
-          mkdir -p build/public/assets
-          cp index.html build/public/index.html
-          cp assets/hero-atlantis.webp build/public/assets/hero-atlantis.webp
-          cp assets/knowledge-map.svg build/public/assets/knowledge-map.svg
-          cp CNAME build/public/CNAME
-          touch build/public/.nojekyll
-
-      - name: Check whether GitHub Pages is enabled
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          if gh api "repos/$GITHUB_REPOSITORY/pages" >/tmp/pages.json 2>/dev/null; then
-            echo "PAGES_ENABLED=true" >> "$GITHUB_ENV"
-            echo "GitHub Pages is enabled."
-          else
-            echo "PAGES_ENABLED=false" >> "$GITHUB_ENV"
-            echo "::notice::Repository is fully built and browser-tested. Enable Settings > Pages > Source: GitHub Actions once, then rerun this workflow."
-          fi
-
-      - name: Configure GitHub Pages
-        if: env.PAGES_ENABLED == 'true'
+      - name: Configure existing GitHub Pages
         uses: actions/configure-pages@v5
-
-      - name: Upload Pages artifact
-        if: env.PAGES_ENABLED == 'true'
+      - name: Upload complete public site
         uses: actions/upload-pages-artifact@v4
         with:
           path: build/public
-
-      - name: Deploy GitHub Pages
-        if: env.PAGES_ENABLED == 'true'
+      - name: Deploy existing custom-domain site
         id: deployment
         uses: actions/deploy-pages@v4
-
-      - name: Verify public website
-        if: env.PAGES_ENABLED == 'true'
+      - name: Verify custom domain exposes this release
         env:
-          PAGE_URL: ${{ steps.deployment.outputs.page_url }}
+          DEPLOYED_URL: ${{ steps.deployment.outputs.page_url }}
         run: |
-          echo "Public URL: $PAGE_URL"
+          echo "GitHub deployment URL: $DEPLOYED_URL"
           python - <<'PY'
-          import os,time,urllib.request
-          url=os.environ['PAGE_URL']
-          for _ in range(24):
+          import time,urllib.request,json
+          url='https://quriatlas.saga1001.com/'
+          for attempt in range(24):
               try:
-                  with urllib.request.urlopen(url+'?verify='+str(time.time_ns()),timeout=20) as r:
-                      body=r.read()
-                      if r.status==200 and b'0.5.0-atlantis-home' in body:
-                          print('Public QuriAtlas build verified.')
-                          break
+                  with urllib.request.urlopen(url+'release.json?verify='+str(time.time_ns()),timeout=20) as r:
+                      data=json.load(r)
+                  if data.get('version')=='0.6.0-atlantis-fullsite' and len(data['pages'])==11:
+                      print('CUSTOM DOMAIN RELEASE VERIFIED:',url,data)
+                      break
               except Exception as e:
-                  print(type(e).__name__,str(e)[:120])
+                  print(type(e).__name__,str(e)[:180])
               time.sleep(5)
           else:
-              raise SystemExit('Public site did not expose the current build')
+              raise SystemExit('Custom domain did not serve the new release')
           PY
-          python tests/e2e.py --url "$PAGE_URL" --out build/qa-public
-
-      - name: Save QA artifact
+      - name: Verify all eleven pages on the public custom domain
+        run: python tests/e2e.py --url https://quriatlas.saga1001.com/ --out build/qa-public
+      - name: Save public verification report
+        run: |
+          mkdir -p qa
+          cp build/qa-public/report.json qa/release-0.6.0.json
+          git add qa/release-0.6.0.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'qa: archive custom-domain browser acceptance v0.6.0'
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
+      - name: Archive browser screenshots and reports
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: quriatlas-atlantis-home
+          name: quriatlas-fullsite-0.6.0
           path: |
             build/qa-local/
             build/qa-public/
-            index.html
+            release.json
           retention-days: 30
           if-no-files-found: warn
