@@ -1,0 +1,115 @@
+name: Build test deploy QuriAtlas
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'site/**'
+      - 'data/**'
+      - 'assets/**'
+      - 'build.py'
+      - 'tests/**'
+      - '.github/workflows/pages.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+concurrency:
+  group: quriatlas-pages
+  cancel-in-progress: true
+
+jobs:
+  build-test-deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Build standalone HTML
+        run: |
+          python build.py
+          node --check site/app.js
+
+      - name: Install browser QA
+        run: |
+          python -m pip install 'playwright==1.57.0'
+          python -m playwright install --with-deps chromium
+
+      - name: Verify local HTTP build
+        run: |
+          python -m http.server 8080 > /tmp/quriatlas-http.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill "$SERVER_PID" 2>/dev/null || true' EXIT
+          python tests/e2e.py --url http://127.0.0.1:8080/ --out build/qa-local
+
+      - name: Archive generated HTML in repository
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html
+          if ! git diff --cached --quiet; then
+            git commit -m 'build: archive tested QuriAtlas HTML'
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
+
+      - name: Stage public site only
+        run: |
+          rm -rf build/public
+          mkdir -p build/public/assets
+          cp index.html build/public/index.html
+          cp assets/hero-atlantis.webp build/public/assets/hero-atlantis.webp
+          cp assets/knowledge-map.svg build/public/assets/knowledge-map.svg
+          touch build/public/.nojekyll
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: build/public
+
+      - name: Deploy GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+      - name: Verify public website
+        env:
+          PAGE_URL: ${{ steps.deployment.outputs.page_url }}
+        run: |
+          echo "Public URL: $PAGE_URL"
+          python - <<'PY'
+          import os,time,urllib.request
+          url=os.environ['PAGE_URL']
+          for _ in range(24):
+              try:
+                  with urllib.request.urlopen(url+'?verify='+str(time.time_ns()),timeout=20) as r:
+                      body=r.read()
+                      if r.status==200 and b'0.4.0-atlantis-cinematic' in body:
+                          print('Public QuriAtlas build verified.')
+                          break
+              except Exception as e:
+                  print(type(e).__name__,str(e)[:120])
+              time.sleep(5)
+          else:
+              raise SystemExit('Public site did not expose the current build')
+          PY
+          python tests/e2e.py --url "$PAGE_URL" --out build/qa-public
+
+      - name: Save QA artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: quriatlas-atlantis-cinematic
+          path: |
+            build/qa-local/
+            build/qa-public/
+            index.html
+          retention-days: 30
+          if-no-files-found: warn
