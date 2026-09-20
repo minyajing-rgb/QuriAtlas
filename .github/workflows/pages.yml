@@ -71,7 +71,7 @@ jobs:
           assert len(release['pages'])==11
           assert (src/'index.html').stat().st_size>10000
           assert (src/'CNAME').read_text().strip()=='quriatlas.saga1001.com'
-          # Copy the tested site, not the repository's old, almost-empty docs directory.
+          # Both the Pages setting and this generated snapshot use main/docs.
           # Preserve unrelated documentation; only generated public paths are replaced.
           shutil.copytree(src,dst,dirs_exist_ok=True)
           (dst/'.nojekyll').touch()
@@ -95,11 +95,7 @@ jobs:
           import json,os,subprocess,time
           from pathlib import Path
           repo=os.environ['GITHUB_REPOSITORY'];head=os.environ['PUBLISH_COMMIT']
-          # A push normally requests this build. Request it explicitly as well;
-          # an already queued/running build is acceptable and is still verified below.
-          request=subprocess.run(['gh','api','--method','POST','repos/'+repo+'/pages/builds'],capture_output=True,text=True)
-          print('PAGES BUILD REQUEST',request.returncode,request.stdout[:800],request.stderr[:500],flush=True)
-          rows=[]
+          rows=[];requested=False
           for attempt in range(72):
               runs=json.loads(subprocess.check_output(['gh','api','repos/'+repo+'/actions/runs?head_sha='+head+'&per_page=30'],text=True))['workflow_runs']
               relevant=[r for r in runs if r.get('path','').startswith('dynamic/pages/')]
@@ -107,16 +103,25 @@ jobs:
               rows.append({'attempt':attempt+1,'runs':status})
               print('SINGLE PUBLISHER',json.dumps(status),flush=True)
               Path('build/diagnostics/branch-publication.json').write_text(json.dumps(rows,indent=2))
-              if relevant and all(r['status']=='completed' for r in relevant):
-                  assert all(r['conclusion']=='success' for r in relevant), 'Branch Pages publication failed'
-                  break
+              active=[r for r in relevant if r['status']!='completed']
+              succeeded=[r for r in relevant if r['conclusion']=='success']
+              failed=[r for r in relevant if r['conclusion'] in ['failure','timed_out','action_required']]
+              if not active and failed:raise SystemExit('Branch Pages publication failed: '+json.dumps(status))
+              # GitHub may cancel a duplicate request for the SAME commit. That
+              # cancellation is not a deployment; require an actual successful
+              # publisher and still validate every public byte and interaction.
+              if not active and succeeded:break
+              if attempt>=5 and not active and not requested:
+                  request=subprocess.run(['gh','api','--method','POST','repos/'+repo+'/pages/builds'],capture_output=True,text=True)
+                  print('PAGES BUILD REQUEST',request.returncode,request.stdout[:800],request.stderr[:500],flush=True)
+                  requested=True
               time.sleep(5)
-          else:raise SystemExit('Branch Pages publication did not complete')
+          else:raise SystemExit('Branch Pages publication did not complete successfully')
           PY
-      - name: Verify root and every page expose this exact tested release
+      - name: Verify root and key pages expose this exact tested release
         run: |
           python - <<'PY'
-          import hashlib,json,os,time,urllib.request,urllib.error
+          import hashlib,json,os,time,urllib.request
           from pathlib import Path
           expected=json.loads(Path('build/public/release.json').read_text())
           urls=['','index.html','lab.html','stories.html','sources.html','release.json']
@@ -152,7 +157,7 @@ jobs:
           from playwright.sync_api import sync_playwright
           expected=json.loads(Path('build/public/release.json').read_text())
           records=[]
-          # No more commits or other deployment mechanism after the verified publish.
+          # No commits and no competing artifact publisher after publication.
           for sample in range(3):
               if sample:time.sleep(15)
               for name in ['','index.html','lab.html','stories.html']:
