@@ -1,0 +1,19 @@
+{
+  "version": "0.6.0-atlantis-fullsite",
+  "pages": [
+    "home",
+    "explore",
+    "lab",
+    "mind",
+    "stories",
+    "play",
+    "community",
+    "journey",
+    "sources",
+    "about",
+    "entanglement"
+  ],
+  "concepts": 24,
+  "sources": 20,
+  "artworks": 9
+}
