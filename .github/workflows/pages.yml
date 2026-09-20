@@ -6,6 +6,7 @@ on:
       - 'site/**'
       - 'data/**'
       - 'assets/art/**'
+      - 'tools/prepare_web_art.py'
       - 'build.py'
       - 'tests/**'
       - 'CNAME'
@@ -27,80 +28,82 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v6
-      - name: Build eleven pages with approved native-resolution art
+      - name: Install reproducible image and browser tools
+        run: |
+          python -m pip install 'Pillow==11.3.0' 'playwright==1.57.0'
+          python -m playwright install --with-deps chromium
+      - name: Build all pages and native art crops
         run: |
           python build.py
           node --check site/app.js
           node --check site/release.js
-          python -m py_compile tests/e2e.py
-      - name: Install browser QA
-        run: |
-          python -m pip install 'playwright==1.57.0'
-          python -m playwright install --with-deps chromium
-      - name: Verify every page and interactive feature locally
+          node --check site/hardening.js
+          python -m py_compile tests/e2e.py tools/prepare_web_art.py
+      - name: Verify all pages and interactions before publishing
         run: |
           python -m http.server 8080 --directory build/public >/tmp/quriatlas-http.log 2>&1 &
           SERVER_PID=$!
           trap 'kill "$SERVER_PID" 2>/dev/null || true' EXIT
           sleep 2
-          python tests/e2e.py --url http://127.0.0.1:8080/ --out build/qa-local
-      - name: Archive tested public pages
+          python tests/e2e.py --url http://127.0.0.1:8080/ --out build/qa-local --commit "$GITHUB_SHA"
+      - name: Archive tested pages and web assets
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add index.html explore.html lab.html mind.html stories.html play.html community.html journey.html sources.html about.html entanglement.html release.json
+          git add index.html explore.html lab.html mind.html stories.html play.html community.html journey.html sources.html about.html entanglement.html release.json assets/art/*-web.webp assets/art/web-manifest.json
           if ! git diff --cached --quiet; then
-            git commit -m 'build: publish eleven native-art bilingual pages v0.6.0'
+            git commit -m 'build: publish native-art bilingual full site v0.6.1'
             git pull --rebase origin main
             git push origin HEAD:main
           fi
       - name: Configure existing GitHub Pages
         uses: actions/configure-pages@v5
-      - name: Upload complete public site
+      - name: Upload complete tested website
         uses: actions/upload-pages-artifact@v4
         with:
           path: build/public
-      - name: Deploy existing custom-domain site
+      - name: Deploy existing custom-domain website
         id: deployment
         uses: actions/deploy-pages@v4
-      - name: Verify custom domain exposes this release
+      - name: Wait for the exact source commit on the custom domain
         env:
           DEPLOYED_URL: ${{ steps.deployment.outputs.page_url }}
         run: |
-          echo "GitHub deployment URL: $DEPLOYED_URL"
+          echo "Deployment URL: $DEPLOYED_URL"
           python - <<'PY'
-          import time,urllib.request,json
+          import json,os,time,urllib.request
           url='https://quriatlas.saga1001.com/'
-          for attempt in range(24):
+          expected=os.environ['GITHUB_SHA']
+          for attempt in range(30):
               try:
                   with urllib.request.urlopen(url+'release.json?verify='+str(time.time_ns()),timeout=20) as r:
-                      data=json.load(r)
-                  if data.get('version')=='0.6.0-atlantis-fullsite' and len(data['pages'])==11:
-                      print('CUSTOM DOMAIN RELEASE VERIFIED:',url,data)
+                      release=json.load(r)
+                  if release.get('source_commit')==expected and release.get('version')=='0.6.1-atlantis-fullsite':
+                      print('EXACT PUBLIC RELEASE VERIFIED',url,expected)
                       break
               except Exception as e:
                   print(type(e).__name__,str(e)[:180])
               time.sleep(5)
           else:
-              raise SystemExit('Custom domain did not serve the new release')
+              raise SystemExit('Custom domain did not expose this exact commit')
           PY
-      - name: Verify all eleven pages on the public custom domain
-        run: python tests/e2e.py --url https://quriatlas.saga1001.com/ --out build/qa-public
-      - name: Save public verification report
+      - name: Verify public pages assets interactions and screenshots
+        run: python tests/e2e.py --url https://quriatlas.saga1001.com/ --out build/qa-public --commit "$GITHUB_SHA"
+      - name: Archive verified public report
         run: |
           mkdir -p qa
-          cp build/qa-public/report.json qa/release-0.6.0.json
-          git add qa/release-0.6.0.json
+          cp build/qa-public/report.json qa/release-0.6.1.json
+          git add qa/release-0.6.1.json
           if ! git diff --cached --quiet; then
-            git commit -m 'qa: archive custom-domain browser acceptance v0.6.0'
+            git commit -m 'qa: archive exact-commit custom-domain acceptance v0.6.1'
             git pull --rebase origin main
             git push origin HEAD:main
           fi
-      - name: Archive browser screenshots and reports
+      - name: Archive public and local evidence separately
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: quriatlas-fullsite-0.6.0
+          name: quriatlas-fullsite-0.6.1
           path: |
             build/qa-local/
             build/qa-public/
