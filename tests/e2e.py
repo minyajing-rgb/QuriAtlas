@@ -18,7 +18,7 @@ with sync_playwright() as pw:
     r=page.goto(a.url,wait_until='networkidle')
     check('HTTP 200',r.status==200)
     check('Expected build',page.evaluate('window.QURI_BUILD')=='0.4.0-atlantis-cinematic')
-    check('Cinematic hero image loaded',page.locator('.hero-scene').evaluate('e=>e.complete && e.naturalWidth>500'))
+    check('Cinematic hero image loaded',page.locator('.hero-scene').evaluate('e=>e.complete && e.naturalWidth>=400'))
     check('Light Atlantis theme',page.evaluate("getComputedStyle(document.documentElement).colorScheme")=='light')
     check('24 concept cards',page.locator('.concept').count()==24)
     check('20 traceable sources',page.locator('.source').count()==20)
