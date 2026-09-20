@@ -1,0 +1,197 @@
+{
+  "version": "0.6.1",
+  "method": "Crop only, native pixels, WebP quality 94; no upscaling.",
+  "original_artworks": 9,
+  "records": [
+    {
+      "key": "home",
+      "source": "assets/art/home.png",
+      "source_size": [
+        1672,
+        941
+      ],
+      "crop_box": [
+        610,
+        100,
+        1672,
+        850
+      ],
+      "web_file": "assets/art/home-web.webp",
+      "web_size": [
+        1062,
+        750
+      ],
+      "upscaled": false,
+      "sha256": "546e911c5956013cbcb01dac4b2af6597e1641d984acec255b1d8ac7d7f6bebf"
+    },
+    {
+      "key": "basics",
+      "source": "assets/art/basics.png",
+      "source_size": [
+        1448,
+        1086
+      ],
+      "crop_box": [
+        560,
+        170,
+        1448,
+        1060
+      ],
+      "web_file": "assets/art/basics-web.webp",
+      "web_size": [
+        888,
+        890
+      ],
+      "upscaled": false,
+      "sha256": "5038e4d8f68a73ea4f8651e73ee086ce92d13419d5bfe91e37fc831a48572b58"
+    },
+    {
+      "key": "lab",
+      "source": "assets/art/lab.png",
+      "source_size": [
+        1672,
+        941
+      ],
+      "crop_box": [
+        680,
+        210,
+        1672,
+        850
+      ],
+      "web_file": "assets/art/lab-web.webp",
+      "web_size": [
+        992,
+        640
+      ],
+      "upscaled": false,
+      "sha256": "b3c4a0d72311fc48e5116665bafc87ebca530f224d2b98d7134bb3351b9cb1c6"
+    },
+    {
+      "key": "mind",
+      "source": "assets/art/mind.png",
+      "source_size": [
+        1448,
+        1086
+      ],
+      "crop_box": [
+        570,
+        150,
+        1448,
+        1030
+      ],
+      "web_file": "assets/art/mind-web.webp",
+      "web_size": [
+        878,
+        880
+      ],
+      "upscaled": false,
+      "sha256": "bb880b59cbd5434a4a74e59c7483d27c457e7d6da84d10bee3869dc907ad6256"
+    },
+    {
+      "key": "stories",
+      "source": "assets/art/stories.png",
+      "source_size": [
+        1448,
+        1086
+      ],
+      "crop_box": [
+        605,
+        280,
+        1448,
+        1050
+      ],
+      "web_file": "assets/art/stories-web.webp",
+      "web_size": [
+        843,
+        770
+      ],
+      "upscaled": false,
+      "sha256": "7bf3a35d2df901300b57d9461aadd54af34f3f7358b4fcb1a902c8f23cfe3f8e"
+    },
+    {
+      "key": "play",
+      "source": "assets/art/play.png",
+      "source_size": [
+        1448,
+        1086
+      ],
+      "crop_box": [
+        295,
+        330,
+        1448,
+        1055
+      ],
+      "web_file": "assets/art/play-web.webp",
+      "web_size": [
+        1153,
+        725
+      ],
+      "upscaled": false,
+      "sha256": "1c934f364f436f089b533b393eb04e0a9b4a1cc548479b8098016e104f85497e"
+    },
+    {
+      "key": "community",
+      "source": "assets/art/community.png",
+      "source_size": [
+        1448,
+        1086
+      ],
+      "crop_box": [
+        320,
+        345,
+        1448,
+        1055
+      ],
+      "web_file": "assets/art/community-web.webp",
+      "web_size": [
+        1128,
+        710
+      ],
+      "upscaled": false,
+      "sha256": "14c8013cd474decf580847a4ed9d1b3dcaec664df5d4c8b4ccc9e55b06368aa9"
+    },
+    {
+      "key": "entanglement",
+      "source": "assets/art/entanglement.png",
+      "source_size": [
+        1672,
+        941
+      ],
+      "crop_box": [
+        665,
+        110,
+        1672,
+        880
+      ],
+      "web_file": "assets/art/entanglement-web.webp",
+      "web_size": [
+        1007,
+        770
+      ],
+      "upscaled": false,
+      "sha256": "ea6e5b44ec1aec0d0fecf4437a77063f68ed93068a3c1863e27a3483b406fe46"
+    },
+    {
+      "key": "journey",
+      "source": "assets/art/journey.png",
+      "source_size": [
+        1672,
+        941
+      ],
+      "crop_box": [
+        0,
+        340,
+        1672,
+        910
+      ],
+      "web_file": "assets/art/journey-web.webp",
+      "web_size": [
+        1672,
+        570
+      ],
+      "upscaled": false,
+      "sha256": "d78f082b7e5c692243af543b56eae9c130e421479567af35322e12ea5b585394"
+    }
+  ],
+  "note": "Fictional scenes and decorative labels are not apparatus diagrams or UI controls."
+}

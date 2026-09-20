@@ -1,5 +1,6 @@
 {
-  "version": "0.6.0-atlantis-fullsite",
+  "version": "0.6.1-atlantis-fullsite",
+  "source_commit": "092a895f2166c420ad0f9015324529a6bd715155",
   "pages": [
     "home",
     "explore",
@@ -15,5 +16,32 @@
   ],
   "concepts": 24,
   "sources": 20,
-  "artworks": 9
+  "artworks": 9,
+  "files": {
+    ".nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "CNAME": "7e828bff239089cdcc122636f291a19bb9f51488f24ffe70c84ddb9fa16ec1b9",
+    "about.html": "392c89e025fdaf49001d5e4f05969c47627a5ff283582e1383a820fa688f1917",
+    "assets/art/basics-web.webp": "5038e4d8f68a73ea4f8651e73ee086ce92d13419d5bfe91e37fc831a48572b58",
+    "assets/art/community-web.webp": "14c8013cd474decf580847a4ed9d1b3dcaec664df5d4c8b4ccc9e55b06368aa9",
+    "assets/art/entanglement-web.webp": "ea6e5b44ec1aec0d0fecf4437a77063f68ed93068a3c1863e27a3483b406fe46",
+    "assets/art/home-scene.webp": "9756198347edbdff9969daadf526f30de58781c29211fb4503e850b52e15bbfb",
+    "assets/art/home-web.webp": "546e911c5956013cbcb01dac4b2af6597e1641d984acec255b1d8ac7d7f6bebf",
+    "assets/art/journey-web.webp": "d78f082b7e5c692243af543b56eae9c130e421479567af35322e12ea5b585394",
+    "assets/art/lab-web.webp": "b3c4a0d72311fc48e5116665bafc87ebca530f224d2b98d7134bb3351b9cb1c6",
+    "assets/art/mind-web.webp": "bb880b59cbd5434a4a74e59c7483d27c457e7d6da84d10bee3869dc907ad6256",
+    "assets/art/play-web.webp": "1c934f364f436f089b533b393eb04e0a9b4a1cc548479b8098016e104f85497e",
+    "assets/art/stories-web.webp": "7bf3a35d2df901300b57d9461aadd54af34f3f7358b4fcb1a902c8f23cfe3f8e",
+    "assets/art/web-manifest.json": "994f83f68f9c667f83dc817a1c48d86dae8ef109770791b0bedcfcfe143a70f1",
+    "community.html": "c8d42d313edf80d647031e3ff7628feee4be4623d7d176929f82774dacdba585",
+    "entanglement.html": "4074812d69c474e7774c2efcd0eba10d83b03ba35e802de3bae2244073b38502",
+    "explore.html": "d833518036bdc7cc73035ea795339c2248bafb03ffd19a57fa87348b75265922",
+    "index.html": "ee87feba7e0e447669ddae817aa74c469d33c63c43304b459d7bd3ad6ac8fb4c",
+    "journey.html": "95076ee22bb684dc2fcf4e054214bc4a34d37a77a04ec7e084d042f8257537ad",
+    "lab.html": "21d85cd5a603c8fbbcefd26a13e08f541395a1f232931fcf751567e40cbdd8fe",
+    "mind.html": "f88a7a69322080df1178ba80d5908c4a25e5cc28d32eed7130e0149cc864f762",
+    "play.html": "475af02cd62a63d852c7c7343c1d2d782f14f2ff6d0d004bcb3e4993f3108e79",
+    "sources.html": "de498ecaa14d5c40f02b441f837b6c185f334b5e40f4a93186d567bd891be0e4",
+    "stories.html": "cc88df8e6625b6c2e065f6f1f2ac643321e82d4a992790da91cd99af1a11b3f4"
+  },
+  "scope": "Bilingual educational static site. Local notebook only; not a public forum."
 }
