@@ -43,7 +43,16 @@ python -m http.server 8080
 Then open http://localhost:8080/
 
 ## Publishing
-GitHub Actions builds, browser-tests and publishes the repository root to GitHub Pages. Custom-domain DNS is intentionally not set in the repository yet.
+GitHub Actions builds and browser-tests the repository root on every relevant push. The new repository still needs its one-time GitHub Pages setting enabled by a repository admin: **Settings → Pages → Source: GitHub Actions**. The workflow detects that setting and deploys automatically once enabled. Custom-domain DNS is intentionally not set yet.
 
 ## Research status
 The public product is a research preview. The current corpus is a sourced seed set, not an exhaustive survey and not a claim that quantum physics proves spiritual propositions.
+
+
+## Current implementation
+- UI build: `0.4.0-atlantis-cinematic`
+- Hero: cinematic Atlantis scene occupying the majority of the desktop visual area
+- Live HTML HUD overlays: superposition / entanglement / enter lab
+- memo cat integrated into the world scene
+- Research method copied into `skills/global-knowledge-atlas/`
+- Legacy Buddhist quantum folder points here and is no longer canonical
