@@ -16,19 +16,33 @@ permissions:
   contents: write
   actions: read
   pages: write
-  id-token: write
 concurrency:
   group: quriatlas-pages
-  cancel-in-progress: true
+  cancel-in-progress: false
 jobs:
   build-test-deploy:
     runs-on: ubuntu-latest
     timeout-minutes: 20
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+    env:
+      PUBLIC_URL: https://quriatlas.saga1001.com/
+      GH_TOKEN: ${{ github.token }}
     steps:
       - uses: actions/checkout@v6
+      - name: Inspect actual Pages publishing source
+        run: |
+          mkdir -p build/diagnostics
+          gh api "repos/$GITHUB_REPOSITORY/pages" > build/diagnostics/pages-before.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          data=json.loads(Path('build/diagnostics/pages-before.json').read_text())
+          safe={k:data.get(k) for k in ['build_type','source','cname','html_url','status','https_enforced']}
+          print('ACTUAL PAGES CONFIGURATION',json.dumps(safe),flush=True)
+          source=data.get('source') or {}
+          assert source.get('branch')=='main' and source.get('path')=='/docs', 'Publishing source changed; do not deploy to an unverified directory'
+          assert data.get('cname','').lower()=='quriatlas.saga1001.com', 'Custom domain mismatch'
+          assert data.get('build_type','legacy')=='legacy', 'Expected the existing branch publisher, not a second artifact publisher'
+          PY
       - name: Install reproducible image and browser tools
         run: |
           python -m pip install 'Pillow==11.3.0' 'playwright==1.57.0'
@@ -47,122 +61,127 @@ jobs:
           trap 'kill "$SERVER_PID" 2>/dev/null || true' EXIT
           sleep 2
           python tests/e2e.py --url http://127.0.0.1:8080/ --out build/qa-local --commit "$GITHUB_SHA"
-      - name: Archive tested pages and web assets
+      - name: Populate the actual docs publishing directory
         run: |
+          python - <<'PY'
+          import hashlib,json,shutil
+          from pathlib import Path
+          src=Path('build/public');dst=Path('docs')
+          release=json.loads((src/'release.json').read_text())
+          assert len(release['pages'])==11
+          assert (src/'index.html').stat().st_size>10000
+          assert (src/'CNAME').read_text().strip()=='quriatlas.saga1001.com'
+          # Copy the tested site, not the repository's old, almost-empty docs directory.
+          # Preserve unrelated documentation; only generated public paths are replaced.
+          shutil.copytree(src,dst,dirs_exist_ok=True)
+          (dst/'.nojekyll').touch()
+          for name,expected in release['files'].items():
+              assert hashlib.sha256((dst/name).read_bytes()).hexdigest()==expected,name
+          assert (dst/'release.json').read_bytes()==(src/'release.json').read_bytes()
+          print('DOCS SNAPSHOT VERIFIED',len(release['files']),'files; 11 pages; 9 artworks',flush=True)
+          PY
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add index.html explore.html lab.html mind.html stories.html play.html community.html journey.html sources.html about.html entanglement.html release.json assets/art/*-web.webp assets/art/web-manifest.json
+          git add docs index.html explore.html lab.html mind.html stories.html play.html community.html journey.html sources.html about.html entanglement.html release.json assets/art/*-web.webp assets/art/web-manifest.json
           if ! git diff --cached --quiet; then
-            git commit -m 'build: publish native-art bilingual full site v0.6.1'
+            git commit -m 'deploy: populate actual main/docs Pages source with verified full site'
             git pull --rebase origin main
             git push origin HEAD:main
           fi
-      - name: Wait for existing branch-based Pages publication to finish
-        env:
-          GH_TOKEN: ${{ github.token }}
+          echo "PUBLISH_COMMIT=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
+      - name: Publish using the existing branch-based Pages publisher only
         run: |
           python - <<'PY'
           import json,os,subprocess,time
-          head=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip()
-          seen=False
-          for attempt in range(48):
-              endpoint='repos/'+os.environ['GITHUB_REPOSITORY']+'/actions/runs?head_sha='+head+'&per_page=30'
-              runs=json.loads(subprocess.check_output(['gh','api',endpoint],text=True))['workflow_runs']
-              branch_runs=[r for r in runs if r.get('path','').startswith('dynamic/pages/')]
-              seen=seen or bool(branch_runs)
-              active=[r for r in branch_runs if r['status']!='completed']
-              print('BRANCH PUBLICATION',head,[{'id':r['id'],'status':r['status'],'conclusion':r['conclusion']} for r in branch_runs],flush=True)
-              if seen and not active:break
-              if not seen and attempt>=5:break
+          from pathlib import Path
+          repo=os.environ['GITHUB_REPOSITORY'];head=os.environ['PUBLISH_COMMIT']
+          # A push normally requests this build. Request it explicitly as well;
+          # an already queued/running build is acceptable and is still verified below.
+          request=subprocess.run(['gh','api','--method','POST','repos/'+repo+'/pages/builds'],capture_output=True,text=True)
+          print('PAGES BUILD REQUEST',request.returncode,request.stdout[:800],request.stderr[:500],flush=True)
+          rows=[]
+          for attempt in range(72):
+              runs=json.loads(subprocess.check_output(['gh','api','repos/'+repo+'/actions/runs?head_sha='+head+'&per_page=30'],text=True))['workflow_runs']
+              relevant=[r for r in runs if r.get('path','').startswith('dynamic/pages/')]
+              status=[{k:r.get(k) for k in ['id','status','conclusion','html_url','head_sha']} for r in relevant]
+              rows.append({'attempt':attempt+1,'runs':status})
+              print('SINGLE PUBLISHER',json.dumps(status),flush=True)
+              Path('build/diagnostics/branch-publication.json').write_text(json.dumps(rows,indent=2))
+              if relevant and all(r['status']=='completed' for r in relevant):
+                  assert all(r['conclusion']=='success' for r in relevant), 'Branch Pages publication failed'
+                  break
               time.sleep(5)
-          else:
-              raise SystemExit('Another Pages publication is still active; refusing to race it')
+          else:raise SystemExit('Branch Pages publication did not complete')
           PY
-      - name: Configure existing GitHub Pages
-        uses: actions/configure-pages@v5
-      - name: Upload complete tested website
-        uses: actions/upload-pages-artifact@v4
-        with:
-          path: build/public
-      - name: Deploy existing custom-domain website
-        id: deployment
-        uses: actions/deploy-pages@v4
-      - name: Wait for the exact source commit on the custom domain
-        env:
-          DEPLOYED_URL: ${{ steps.deployment.outputs.page_url }}
+      - name: Verify root and every page expose this exact tested release
         run: |
-          echo "Deployment URL: $DEPLOYED_URL"
           python - <<'PY'
-          import json,os,time,urllib.request
-          url='https://quriatlas.saga1001.com/'
-          expected=os.environ['GITHUB_SHA']
+          import hashlib,json,os,time,urllib.request,urllib.error
+          from pathlib import Path
+          expected=json.loads(Path('build/public/release.json').read_text())
+          urls=['','index.html','lab.html','stories.html','sources.html','release.json']
+          records=[]
           for attempt in range(30):
               try:
-                  with urllib.request.urlopen(url+'release.json?verify='+str(time.time_ns()),timeout=20) as r:
-                      release=json.load(r)
-                  if release.get('source_commit')==expected and release.get('version')=='0.6.1-atlantis-fullsite':
-                      print('EXACT PUBLIC RELEASE VERIFIED',url,expected)
-                      break
-              except Exception as e:
-                  print(type(e).__name__,str(e)[:180])
-              time.sleep(5)
-          else:
-              raise SystemExit('Custom domain did not expose this exact commit')
+                  for name in urls:
+                      req=urllib.request.Request(os.environ['PUBLIC_URL']+name,headers={'Cache-Control':'no-cache','User-Agent':'QuriAtlas-release-verification'})
+                      with urllib.request.urlopen(req,timeout=30) as response:
+                          body=response.read();code=response.status
+                          records.append({'url':response.url,'status':code,'attempt':attempt+1,'bytes':len(body)})
+                      assert code==200
+                      if name=='release.json':assert json.loads(body)['source_commit']==os.environ['GITHUB_SHA']
+                      else:assert hashlib.sha256(body).hexdigest()==expected['files'][name or 'index.html'], 'Unexpected public page: '+name
+                  print('ROOT AND KEY PAGES VERIFIED WITHOUT A CACHE-BUSTING QUERY',os.environ['PUBLIC_URL'],os.environ['GITHUB_SHA'],flush=True)
+                  break
+              except Exception as exc:
+                  records.append({'attempt':attempt+1,'error':str(exc)[:500]})
+                  print(type(exc).__name__,str(exc)[:300],flush=True)
+                  time.sleep(8)
+          else:raise SystemExit('Public root/page hashes do not match the tested release')
+          Path('build/diagnostics/root-http.json').write_text(json.dumps(records,indent=2))
           PY
-      - name: Verify public pages assets interactions and screenshots
+      - name: Verify all public pages images bilingual controls and experiments
+        run: |
+          python tests/e2e.py --url "$PUBLIC_URL" --out build/qa-public --commit "$GITHUB_SHA"
+      - name: Recheck stability and capture the actual public root
         run: |
           python - <<'PY'
-          import json,os,shutil,subprocess,time
+          import hashlib,json,os,time,urllib.request
+          from datetime import datetime,timezone
           from pathlib import Path
-          evidence=Path('build/qa-public-attempts');evidence.mkdir(parents=True,exist_ok=True)
-          attempts=[]
-          for attempt in range(1,4):
-              folder=evidence/('attempt-'+str(attempt))
-              command=['python','tests/e2e.py','--url','https://quriatlas.saga1001.com/','--out',str(folder),'--commit',os.environ['GITHUB_SHA']]
-              result=subprocess.run(command,text=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
-              print(result.stdout,flush=True)
-              folder.mkdir(parents=True,exist_ok=True)
-              (folder/'execution.log').write_text(result.stdout,encoding='utf-8')
-              report_path=folder/'report.json'
-              report=json.loads(report_path.read_text()) if report_path.exists() else {'checks':[]}
-              if result.returncode and not report.get('failed'):
-                  report['checks'].append({'name':'Public acceptance completed without an unhandled HTTP/browser exception','passed':False})
-                  report['failed']=1
-                  report['execution_error']=result.stdout[-2500:]
-                  report_path.write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding='utf-8')
-              attempts.append({'attempt':attempt,'exit_code':result.returncode,'passed':report.get('passed',0),'failed':report.get('failed',0)})
-              (evidence/'attempts.json').write_text(json.dumps(attempts,indent=2),encoding='utf-8')
-              if result.returncode==0:
-                  target=Path('build/qa-public')
-                  if target.exists():shutil.rmtree(target)
-                  shutil.copytree(folder,target)
-                  print('FULL PUBLIC ACCEPTANCE PASSED',attempts,flush=True)
-                  break
-              # Only transient transport/HTTP failures are eligible for a retry.
-              # Every page, hash, image and functional assertion remains mandatory.
-              transient=('Page unreachable after bounded retries:' in result.stdout or 'TimeoutError' in result.stdout or 'Published file HTTP 200:' in result.stdout)
-              if not transient or attempt==3:raise SystemExit(result.returncode)
-              time.sleep(20*attempt)
+          from playwright.sync_api import sync_playwright
+          expected=json.loads(Path('build/public/release.json').read_text())
+          records=[]
+          # No more commits or other deployment mechanism after the verified publish.
+          for sample in range(3):
+              if sample:time.sleep(15)
+              for name in ['','index.html','lab.html','stories.html']:
+                  with urllib.request.urlopen(os.environ['PUBLIC_URL']+name,timeout=30) as r:
+                      body=r.read();assert r.status==200
+                  assert hashlib.sha256(body).hexdigest()==expected['files'][name or 'index.html']
+                  records.append({'url':os.environ['PUBLIC_URL']+name,'status':200,'sha256':hashlib.sha256(body).hexdigest(),'utc':datetime.now(timezone.utc).isoformat()})
+          with sync_playwright() as pw:
+              browser=pw.chromium.launch()
+              page=browser.new_page(viewport={'width':1440,'height':1000},reduced_motion='reduce')
+              r=page.goto(os.environ['PUBLIC_URL'],wait_until='networkidle');assert r.status==200
+              page.screenshot(path='build/qa-public/root-live-desktop.png',full_page=True)
+              page.set_viewport_size({'width':390,'height':844})
+              page.screenshot(path='build/qa-public/root-live-mobile.png',full_page=True)
+              browser.close()
+          receipt={'verified_at_utc':datetime.now(timezone.utc).isoformat(),'source_commit':os.environ['GITHUB_SHA'],'publish_commit':os.environ['PUBLISH_COMMIT'],'root_url':os.environ['PUBLIC_URL'],'publisher':'GitHub Pages main/docs only','stability_samples':records,'run_url':'https://github.com/'+os.environ['GITHUB_REPOSITORY']+'/actions/runs/'+os.environ['GITHUB_RUN_ID']}
+          Path('build/qa-public/deployment-receipt.json').write_text(json.dumps(receipt,indent=2))
+          print('LIVE SITE DELIVERY VERIFIED',json.dumps(receipt),flush=True)
           PY
-      - name: Archive verified public report
-        run: |
-          mkdir -p qa
-          cp build/qa-public/report.json qa/release-0.6.1.json
-          git add qa/release-0.6.1.json
-          if ! git diff --cached --quiet; then
-            git commit -m 'qa: archive exact-commit custom-domain acceptance v0.6.1'
-            git pull --rebase origin main
-            git push origin HEAD:main
-          fi
+          gh api "repos/$GITHUB_REPOSITORY/pages" > build/diagnostics/pages-after.json
       - name: Archive public and local evidence separately
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: quriatlas-fullsite-0.6.1
+          name: quriatlas-publish-fix-${{ github.run_id }}
           path: |
             build/qa-local/
             build/qa-public/
-            build/qa-public-attempts/
+            build/diagnostics/
             release.json
           retention-days: 30
           if-no-files-found: warn
