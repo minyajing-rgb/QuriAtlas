@@ -1,0 +1,83 @@
+[
+  {
+    "key": "home",
+    "width": 1672,
+    "height": 941,
+    "file": "home.webp",
+    "bytes": 480408,
+    "sha256": "22bcdcf050150ea34a38e5dc0fd926603dce536d8edff45628044a8ef184e17c",
+    "transfer": "spatial tiles of approved original, reassembled at original dimensions; export resampling documented"
+  },
+  {
+    "key": "lab",
+    "width": 1672,
+    "height": 941,
+    "file": "lab.webp",
+    "bytes": 486828,
+    "sha256": "b47cc6751452de12425b9123ce1bf0e1ddf1a9b6d0087bfc7fa3104feb8349b6",
+    "transfer": "spatial tiles of approved original, reassembled at original dimensions; export resampling documented"
+  },
+  {
+    "key": "basics",
+    "width": 1448,
+    "height": 1086,
+    "file": "basics.webp",
+    "bytes": 487116,
+    "sha256": "00f8255756277a967fbe962c22e476997e33eaed1e939dbdde1d164517975f9f",
+    "transfer": "spatial tiles of approved original, reassembled at original dimensions; export resampling documented"
+  },
+  {
+    "key": "mind",
+    "width": 1448,
+    "height": 1086,
+    "file": "mind.webp",
+    "bytes": 519562,
+    "sha256": "e7bf0e5dad2c9324cf16671024b7aaf46e50443b203ea805dd203a04b247c3b1",
+    "transfer": "spatial tiles of approved original, reassembled at original dimensions; export resampling documented"
+  },
+  {
+    "key": "stories",
+    "width": 1448,
+    "height": 1086,
+    "file": "stories.webp",
+    "bytes": 524096,
+    "sha256": "21159b5ac07429c0f8f1140163b69a6c7e9ca25f45fa283691637e66c0239421",
+    "transfer": "spatial tiles of approved original, reassembled at original dimensions; export resampling documented"
+  },
+  {
+    "key": "play",
+    "width": 1448,
+    "height": 1086,
+    "file": "play.webp",
+    "bytes": 536824,
+    "sha256": "6bb070ecb3fb8ebdf3bb6dbdee6849d3329201cc7e40cdb21adfdcc7bc8a141f",
+    "transfer": "spatial tiles of approved original, reassembled at original dimensions; export resampling documented"
+  },
+  {
+    "key": "community",
+    "width": 1448,
+    "height": 1086,
+    "file": "community.webp",
+    "bytes": 573192,
+    "sha256": "581a71f8ec54ccaef095530138d72cfdc7a72ce8c522b146470835bd09ae2ae4",
+    "transfer": "spatial tiles of approved original, reassembled at original dimensions; export resampling documented"
+  },
+  {
+    "key": "entanglement",
+    "width": 1672,
+    "height": 941,
+    "file": "entanglement.webp",
+    "bytes": 560714,
+    "sha256": "571d8a3349a4c36c5c5d8fa32e7b2acee68ea5e499ab894e5657d07b364172d2",
+    "transfer": "spatial tiles of approved original, reassembled at original dimensions; export resampling documented"
+  },
+  {
+    "key": "journey",
+    "width": 1672,
+    "height": 941,
+    "file": "journey.webp",
+    "bytes": 552110,
+    "sha256": "81d5975e7d0afff6fb80d5f2ce68b99cd845bd987f3f357a173d8a36b3421a7a",
+    "transfer": "spatial tiles of approved original, reassembled at original dimensions; export resampling documented"
+  }
+]
