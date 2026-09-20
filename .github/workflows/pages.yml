@@ -14,6 +14,7 @@ on:
   workflow_dispatch:
 permissions:
   contents: write
+  actions: read
   pages: write
   id-token: write
 concurrency:
@@ -56,6 +57,27 @@ jobs:
             git pull --rebase origin main
             git push origin HEAD:main
           fi
+      - name: Wait for existing branch-based Pages publication to finish
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python - <<'PY'
+          import json,os,subprocess,time
+          head=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip()
+          seen=False
+          for attempt in range(48):
+              endpoint='repos/'+os.environ['GITHUB_REPOSITORY']+'/actions/runs?head_sha='+head+'&per_page=30'
+              runs=json.loads(subprocess.check_output(['gh','api',endpoint],text=True))['workflow_runs']
+              branch_runs=[r for r in runs if r.get('path','').startswith('dynamic/pages/')]
+              seen=seen or bool(branch_runs)
+              active=[r for r in branch_runs if r['status']!='completed']
+              print('BRANCH PUBLICATION',head,[{'id':r['id'],'status':r['status'],'conclusion':r['conclusion']} for r in branch_runs],flush=True)
+              if seen and not active:break
+              if not seen and attempt>=5:break
+              time.sleep(5)
+          else:
+              raise SystemExit('Another Pages publication is still active; refusing to race it')
+          PY
       - name: Configure existing GitHub Pages
         uses: actions/configure-pages@v5
       - name: Upload complete tested website
@@ -88,7 +110,40 @@ jobs:
               raise SystemExit('Custom domain did not expose this exact commit')
           PY
       - name: Verify public pages assets interactions and screenshots
-        run: python tests/e2e.py --url https://quriatlas.saga1001.com/ --out build/qa-public --commit "$GITHUB_SHA"
+        run: |
+          python - <<'PY'
+          import json,os,shutil,subprocess,time
+          from pathlib import Path
+          evidence=Path('build/qa-public-attempts');evidence.mkdir(parents=True,exist_ok=True)
+          attempts=[]
+          for attempt in range(1,4):
+              folder=evidence/('attempt-'+str(attempt))
+              command=['python','tests/e2e.py','--url','https://quriatlas.saga1001.com/','--out',str(folder),'--commit',os.environ['GITHUB_SHA']]
+              result=subprocess.run(command,text=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
+              print(result.stdout,flush=True)
+              folder.mkdir(parents=True,exist_ok=True)
+              (folder/'execution.log').write_text(result.stdout,encoding='utf-8')
+              report_path=folder/'report.json'
+              report=json.loads(report_path.read_text()) if report_path.exists() else {'checks':[]}
+              if result.returncode and not report.get('failed'):
+                  report['checks'].append({'name':'Public acceptance completed without an unhandled HTTP/browser exception','passed':False})
+                  report['failed']=1
+                  report['execution_error']=result.stdout[-2500:]
+                  report_path.write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding='utf-8')
+              attempts.append({'attempt':attempt,'exit_code':result.returncode,'passed':report.get('passed',0),'failed':report.get('failed',0)})
+              (evidence/'attempts.json').write_text(json.dumps(attempts,indent=2),encoding='utf-8')
+              if result.returncode==0:
+                  target=Path('build/qa-public')
+                  if target.exists():shutil.rmtree(target)
+                  shutil.copytree(folder,target)
+                  print('FULL PUBLIC ACCEPTANCE PASSED',attempts,flush=True)
+                  break
+              # Only transient transport/HTTP failures are eligible for a retry.
+              # Every page, hash, image and functional assertion remains mandatory.
+              transient=('Page unreachable after bounded retries:' in result.stdout or 'TimeoutError' in result.stdout or 'Published file HTTP 200:' in result.stdout)
+              if not transient or attempt==3:raise SystemExit(result.returncode)
+              time.sleep(20*attempt)
+          PY
       - name: Archive verified public report
         run: |
           mkdir -p qa
@@ -107,6 +162,7 @@ jobs:
           path: |
             build/qa-local/
             build/qa-public/
+            build/qa-public-attempts/
             release.json
           retention-days: 30
           if-no-files-found: warn
