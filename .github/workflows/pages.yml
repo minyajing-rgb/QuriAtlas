@@ -65,21 +65,35 @@ jobs:
           cp assets/knowledge-map.svg build/public/assets/knowledge-map.svg
           touch build/public/.nojekyll
 
+      - name: Check whether GitHub Pages is enabled
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh api "repos/$GITHUB_REPOSITORY/pages" >/tmp/pages.json 2>/dev/null; then
+            echo "PAGES_ENABLED=true" >> "$GITHUB_ENV"
+            echo "GitHub Pages is enabled."
+          else
+            echo "PAGES_ENABLED=false" >> "$GITHUB_ENV"
+            echo "::notice::Repository is fully built and browser-tested. Enable Settings > Pages > Source: GitHub Actions once, then rerun this workflow."
+          fi
+
       - name: Configure GitHub Pages
+        if: env.PAGES_ENABLED == 'true'
         uses: actions/configure-pages@v5
-        with:
-          enablement: true
 
       - name: Upload Pages artifact
+        if: env.PAGES_ENABLED == 'true'
         uses: actions/upload-pages-artifact@v4
         with:
           path: build/public
 
       - name: Deploy GitHub Pages
+        if: env.PAGES_ENABLED == 'true'
         id: deployment
         uses: actions/deploy-pages@v4
 
       - name: Verify public website
+        if: env.PAGES_ENABLED == 'true'
         env:
           PAGE_URL: ${{ steps.deployment.outputs.page_url }}
         run: |
