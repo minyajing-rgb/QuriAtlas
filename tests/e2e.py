@@ -2,18 +2,35 @@
 import argparse,json,time,shutil
 from pathlib import Path
 from urllib.parse import urljoin
-from playwright.sync_api import sync_playwright
+from playwright.sync_api import sync_playwright, TimeoutError as PlaywrightTimeout
 
 VERSION='0.6.0-atlantis-fullsite'
 PAGES=['home','explore','lab','mind','stories','play','community','journey','sources','about','entanglement']
 p=argparse.ArgumentParser();p.add_argument('--url',default='http://127.0.0.1:8080/');p.add_argument('--out',default='build/qa-local');a=p.parse_args()
 out=Path(a.out);out.mkdir(parents=True,exist_ok=True)
-checks=[];errors=[]
+checks=[];errors=[];requests=[]
 def check(name,condition):
  checks.append({'name':name,'passed':bool(condition)})
  if not condition:raise AssertionError(name)
 def path(name):return 'index.html' if name=='home' else name+'.html'
 def slide(selector,value):page.locator(selector).evaluate('(e,v)=>{e.value=v;e.dispatchEvent(new Event("input",{bubbles:true}))}',str(value))
+def visit(url):
+ """Retry transient network/CDN failures only; a valid page must still pass every check."""
+ for attempt in range(4):
+  try:
+   response=page.goto(url,wait_until='networkidle',timeout=60000)
+   code=response.status if response else 0
+   requests.append({'url':url,'status':code,'attempt':attempt+1})
+   print('HTTP',code,'attempt',attempt+1,url,flush=True)
+   if code==200:return response
+   try:(out/('http-error-'+str(len(requests))+'.txt')).write_text(page.locator('body').inner_text()[:5000])
+   except Exception:pass
+   if code not in [0,404,408,425,429,500,502,503,504]:break
+  except PlaywrightTimeout as exc:
+   requests.append({'url':url,'status':'timeout','attempt':attempt+1,'message':str(exc)[:400]})
+   print('HTTP timeout',attempt+1,url,flush=True)
+  if attempt<3:time.sleep(3*(attempt+1))
+ raise AssertionError('HTTP did not reach 200 after bounded retries: '+url)
 with sync_playwright() as pw:
  browser=pw.chromium.launch(executable_path=shutil.which('chromium') or None,headless=True)
  context=browser.new_context(viewport={'width':1440,'height':1000},reduced_motion='reduce',accept_downloads=True)
@@ -22,7 +39,7 @@ with sync_playwright() as pw:
   for name in PAGES:
    for language in ['zh','en']:
     url=urljoin(a.url,path(name))+'?lang='+language+'&qa='+str(time.time_ns())
-    response=page.goto(url,wait_until='networkidle',timeout=60000)
+    response=visit(url)
     check(name+'/'+language+' HTTPS/HTTP 200',response.status==200)
     check(name+'/'+language+' release',page.evaluate('window.QURI_BUILD')==VERSION)
     check(name+'/'+language+' page route',page.locator('body').get_attribute('data-page')==name)
@@ -41,7 +58,7 @@ with sync_playwright() as pw:
     if language=='zh':page.screenshot(path=str(out/(name+'-zh-desktop.png')),full_page=True)
     if name=='home' and language=='en':page.screenshot(path=str(out/'home-en-desktop.png'),full_page=False)
     check(name+'/'+language+' valid local HTML targets',page.evaluate(r'''()=>Array.from(document.querySelectorAll('#app > :not(#legacy-home) a[href]')).filter(a=>new URL(a.href).origin===location.origin && a.getAttribute('href').includes('.html')).every(a=>/^(index|explore|lab|mind|stories|play|community|journey|sources|about|entanglement)\.html/.test(a.getAttribute('href')))'''))
-  page.goto(urljoin(a.url,'explore.html?lang=zh'),wait_until='networkidle')
+  visit(urljoin(a.url,'explore.html?lang=zh'))
   check('24 real concept cards',page.locator('#page-content .concept').count()==24)
   page.locator('#search').fill('entanglement');check('Bilingual search finds concepts',page.locator('#page-content .concept').count()>0)
   page.locator('#page-content .concept').first.click();check('Concept dialog opens',page.locator('#entryDialog').is_visible())
@@ -49,7 +66,7 @@ with sync_playwright() as pw:
   page.locator('[data-action=close]').click();page.locator('#search').fill('')
   with page.expect_download() as dl:page.locator('[data-action=export]').click()
   dl.value.save_as(str(out/'knowledge-map.svg'));check('SVG export',Path(out/'knowledge-map.svg').stat().st_size>1000)
-  page.goto(urljoin(a.url,'lab.html?lang=zh'),wait_until='networkidle')
+  visit(urljoin(a.url,'lab.html?lang=zh'))
   page.locator('[data-action=many]').click();check('Double slit 200 samples','200' in page.locator('#labValue').inner_text())
   page.locator('[data-lang=en]').click();check('Samples persist across languages','200' in page.locator('#labValue').inner_text())
   page.locator('#detector').check();check('Which path clears samples and removes visibility','V = 0.00' in page.locator('#labValue').inner_text() and page.locator('#visibility').is_disabled())
@@ -58,21 +75,21 @@ with sync_playwright() as pw:
   page.locator('[data-lab=bell]').click();slide('#theta',45);check('Bell ideal maximum','2.828' in page.locator('#labValue').inner_text())
   page.locator('[data-action=pairs]').click();check('Joint pair samples','1,000' in page.locator('#pairStats').inner_text())
   page.set_viewport_size({'width':390,'height':844});page.screenshot(path=str(out/'lab-en-mobile.png'),full_page=True)
-  page.goto(urljoin(a.url,'play.html?lang=en'),wait_until='networkidle')
+  visit(urljoin(a.url,'play.html?lang=en'))
   for i,answer in enumerate([0,1,1,0,1,0]):page.locator(f'[data-quiz="{i}"][data-choice="{answer}"]').click()
   check('Quiz completes accurately','6/6' in page.locator('.q-quiz-score').inner_text() and 'Correct 6' in page.locator('.q-quiz-score').inner_text())
-  page.goto(urljoin(a.url,'community.html?lang=en'),wait_until='networkidle')
-  page.locator('#notebook').fill('My quantum note — native art release QA.');page.locator('[data-q=save-note]').click();page.reload(wait_until='networkidle')
+  visit(urljoin(a.url,'community.html?lang=en'))
+  page.locator('#notebook').fill('My quantum note — native art release QA.');page.locator('[data-q=save-note]').click();visit(page.url)
   check('Notebook persists',page.locator('#notebook').input_value().startswith('My quantum note'))
   with page.expect_download() as dl:page.locator('[data-q=export-note]').click()
   check('Notebook export',dl.value.suggested_filename=='QuriAtlas-notebook.txt')
-  page.goto(urljoin(a.url,'sources.html?lang=en'),wait_until='networkidle');check('20 evidence entries',page.locator('#page-content .source').count()==20)
+  visit(urljoin(a.url,'sources.html?lang=en'));check('20 evidence entries',page.locator('#page-content .source').count()==20)
   page.goto(a.url+'?lang=en#sources',wait_until='domcontentloaded');page.wait_for_url('**/sources.html*',timeout=20000);check('Old deep links resolve','sources.html' in page.url)
-  page.goto(urljoin(a.url,'index.html?lang=zh'),wait_until='networkidle');page.screenshot(path=str(out/'home-zh-mobile.png'),full_page=True)
+  visit(urljoin(a.url,'index.html?lang=zh'));page.screenshot(path=str(out/'home-zh-mobile.png'),full_page=True)
   page.locator('[data-q=menu]').click();check('Mobile menu functional',page.locator('.q-mobile-menu').is_visible())
   check('No JavaScript runtime errors',not errors)
  finally:
-  report={'release':VERSION,'base_url':a.url,'scope':'real HTTP browser acceptance','page_count':11,'languages':['zh','en'],'widths':[1440,768,390],'passed':sum(x['passed'] for x in checks),'failed':sum(not x['passed'] for x in checks),'checks':checks,'javascript_errors':errors}
+  report={'release':VERSION,'base_url':a.url,'scope':'real HTTP browser acceptance','page_count':11,'languages':['zh','en'],'widths':[1440,768,390],'passed':sum(x['passed'] for x in checks),'failed':sum(not x['passed'] for x in checks),'checks':checks,'javascript_errors':errors,'http_attempts':requests}
   (out/'report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2))
   browser.close()
 print(json.dumps({'release':VERSION,'passed':len(checks),'base_url':a.url}))
