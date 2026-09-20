@@ -1,0 +1,2105 @@
+{
+  "release": "0.6.1-atlantis-fullsite",
+  "source_commit": "411621c5c834ae3a713f95a70e7a0aa7d0cc00dc",
+  "base_url": "https://quriatlas.saga1001.com/",
+  "scope": "HTTP browser acceptance; exact public file SHA256 verification",
+  "passed": 472,
+  "failed": 0,
+  "checks": [
+    {
+      "name": "Release manifest HTTP 200",
+      "passed": true
+    },
+    {
+      "name": "Exact source commit in manifest",
+      "passed": true
+    },
+    {
+      "name": "Eleven public pages",
+      "passed": true
+    },
+    {
+      "name": "Nine approved artworks",
+      "passed": true
+    },
+    {
+      "name": "Published file HTTP 200: about.html",
+      "passed": true
+    },
+    {
+      "name": "Published file exact SHA256: about.html",
+      "passed": true
+    },
+    {
+      "name": "Published file HTTP 200: assets/art/basics-web.webp",
+      "passed": true
+    },
+    {
+      "name": "Published file exact SHA256: assets/art/basics-web.webp",
+      "passed": true
+    },
+    {
+      "name": "Published file HTTP 200: assets/art/community-web.webp",
+      "passed": true
+    },
+    {
+      "name": "Published file exact SHA256: assets/art/community-web.webp",
+      "passed": true
+    },
+    {
+      "name": "Published file HTTP 200: assets/art/entanglement-web.webp",
+      "passed": true
+    },
+    {
+      "name": "Published file exact SHA256: assets/art/entanglement-web.webp",
+      "passed": true
+    },
+    {
+      "name": "Published file HTTP 200: assets/art/home-scene.webp",
+      "passed": true
+    },
+    {
+      "name": "Published file exact SHA256: assets/art/home-scene.webp",
+      "passed": true
+    },
+    {
+      "name": "Published file HTTP 200: assets/art/home-web.webp",
+      "passed": true
+    },
+    {
+      "name": "Published file exact SHA256: assets/art/home-web.webp",
+      "passed": true
+    },
+    {
+      "name": "Published file HTTP 200: assets/art/journey-web.webp",
+      "passed": true
+    },
+    {
+      "name": "Published file exact SHA256: assets/art/journey-web.webp",
+      "passed": true
+    },
+    {
+      "name": "Published file HTTP 200: assets/art/lab-web.webp",
+      "passed": true
+    },
+    {
+      "name": "Published file exact SHA256: assets/art/lab-web.webp",
+      "passed": true
+    },
+    {
+      "name": "Published file HTTP 200: assets/art/mind-web.webp",
+      "passed": true
+    },
+    {
+      "name": "Published file exact SHA256: assets/art/mind-web.webp",
+      "passed": true
+    },
+    {
+      "name": "Published file HTTP 200: assets/art/play-web.webp",
+      "passed": true
+    },
+    {
+      "name": "Published file exact SHA256: assets/art/play-web.webp",
+      "passed": true
+    },
+    {
+      "name": "Published file HTTP 200: assets/art/stories-web.webp",
+      "passed": true
+    },
+    {
+      "name": "Published file exact SHA256: assets/art/stories-web.webp",
+      "passed": true
+    },
+    {
+      "name": "Published file HTTP 200: assets/art/web-manifest.json",
+      "passed": true
+    },
+    {
+      "name": "Published file exact SHA256: assets/art/web-manifest.json",
+      "passed": true
+    },
+    {
+      "name": "Published file HTTP 200: community.html",
+      "passed": true
+    },
+    {
+      "name": "Published file exact SHA256: community.html",
+      "passed": true
+    },
+    {
+      "name": "Published file HTTP 200: entanglement.html",
+      "passed": true
+    },
+    {
+      "name": "Published file exact SHA256: entanglement.html",
+      "passed": true
+    },
+    {
+      "name": "Published file HTTP 200: explore.html",
+      "passed": true
+    },
+    {
+      "name": "Published file exact SHA256: explore.html",
+      "passed": true
+    },
+    {
+      "name": "Published file HTTP 200: index.html",
+      "passed": true
+    },
+    {
+      "name": "Published file exact SHA256: index.html",
+      "passed": true
+    },
+    {
+      "name": "Published file HTTP 200: journey.html",
+      "passed": true
+    },
+    {
+      "name": "Published file exact SHA256: journey.html",
+      "passed": true
+    },
+    {
+      "name": "Published file HTTP 200: lab.html",
+      "passed": true
+    },
+    {
+      "name": "Published file exact SHA256: lab.html",
+      "passed": true
+    },
+    {
+      "name": "Published file HTTP 200: mind.html",
+      "passed": true
+    },
+    {
+      "name": "Published file exact SHA256: mind.html",
+      "passed": true
+    },
+    {
+      "name": "Published file HTTP 200: play.html",
+      "passed": true
+    },
+    {
+      "name": "Published file exact SHA256: play.html",
+      "passed": true
+    },
+    {
+      "name": "Published file HTTP 200: sources.html",
+      "passed": true
+    },
+    {
+      "name": "Published file exact SHA256: sources.html",
+      "passed": true
+    },
+    {
+      "name": "Published file HTTP 200: stories.html",
+      "passed": true
+    },
+    {
+      "name": "Published file exact SHA256: stories.html",
+      "passed": true
+    },
+    {
+      "name": "Nine native image records",
+      "passed": true
+    },
+    {
+      "name": "No asset upscaling",
+      "passed": true
+    },
+    {
+      "name": "home/zh HTTP 200",
+      "passed": true
+    },
+    {
+      "name": "home/zh current build",
+      "passed": true
+    },
+    {
+      "name": "home/zh exact source commit",
+      "passed": true
+    },
+    {
+      "name": "home/zh page identity",
+      "passed": true
+    },
+    {
+      "name": "home/zh language",
+      "passed": true
+    },
+    {
+      "name": "home/zh one visible h1",
+      "passed": true
+    },
+    {
+      "name": "home/zh no overflow at 1440",
+      "passed": true
+    },
+    {
+      "name": "home/zh no overflow at 768",
+      "passed": true
+    },
+    {
+      "name": "home/zh no overflow at 390",
+      "passed": true
+    },
+    {
+      "name": "home/zh native artwork 0",
+      "passed": true
+    },
+    {
+      "name": "home/zh native dimensions not enlarged 0",
+      "passed": true
+    },
+    {
+      "name": "home/zh no old thumbnail 0",
+      "passed": true
+    },
+    {
+      "name": "home/zh native artwork 1",
+      "passed": true
+    },
+    {
+      "name": "home/zh native dimensions not enlarged 1",
+      "passed": true
+    },
+    {
+      "name": "home/zh no old thumbnail 1",
+      "passed": true
+    },
+    {
+      "name": "home/zh native artwork 2",
+      "passed": true
+    },
+    {
+      "name": "home/zh native dimensions not enlarged 2",
+      "passed": true
+    },
+    {
+      "name": "home/zh no old thumbnail 2",
+      "passed": true
+    },
+    {
+      "name": "home/zh native artwork 3",
+      "passed": true
+    },
+    {
+      "name": "home/zh native dimensions not enlarged 3",
+      "passed": true
+    },
+    {
+      "name": "home/zh no old thumbnail 3",
+      "passed": true
+    },
+    {
+      "name": "home/zh native artwork 4",
+      "passed": true
+    },
+    {
+      "name": "home/zh native dimensions not enlarged 4",
+      "passed": true
+    },
+    {
+      "name": "home/zh no old thumbnail 4",
+      "passed": true
+    },
+    {
+      "name": "home/zh native artwork 5",
+      "passed": true
+    },
+    {
+      "name": "home/zh native dimensions not enlarged 5",
+      "passed": true
+    },
+    {
+      "name": "home/zh no old thumbnail 5",
+      "passed": true
+    },
+    {
+      "name": "home/zh native artwork 6",
+      "passed": true
+    },
+    {
+      "name": "home/zh native dimensions not enlarged 6",
+      "passed": true
+    },
+    {
+      "name": "home/zh no old thumbnail 6",
+      "passed": true
+    },
+    {
+      "name": "home/zh native artwork 7",
+      "passed": true
+    },
+    {
+      "name": "home/zh native dimensions not enlarged 7",
+      "passed": true
+    },
+    {
+      "name": "home/zh no old thumbnail 7",
+      "passed": true
+    },
+    {
+      "name": "home/zh native artwork 8",
+      "passed": true
+    },
+    {
+      "name": "home/zh native dimensions not enlarged 8",
+      "passed": true
+    },
+    {
+      "name": "home/zh no old thumbnail 8",
+      "passed": true
+    },
+    {
+      "name": "home/zh native artwork 9",
+      "passed": true
+    },
+    {
+      "name": "home/zh native dimensions not enlarged 9",
+      "passed": true
+    },
+    {
+      "name": "home/zh no old thumbnail 9",
+      "passed": true
+    },
+    {
+      "name": "home/zh native artwork 10",
+      "passed": true
+    },
+    {
+      "name": "home/zh native dimensions not enlarged 10",
+      "passed": true
+    },
+    {
+      "name": "home/zh no old thumbnail 10",
+      "passed": true
+    },
+    {
+      "name": "home/zh native artwork 11",
+      "passed": true
+    },
+    {
+      "name": "home/zh native dimensions not enlarged 11",
+      "passed": true
+    },
+    {
+      "name": "home/zh no old thumbnail 11",
+      "passed": true
+    },
+    {
+      "name": "home/zh native artwork 12",
+      "passed": true
+    },
+    {
+      "name": "home/zh native dimensions not enlarged 12",
+      "passed": true
+    },
+    {
+      "name": "home/zh no old thumbnail 12",
+      "passed": true
+    },
+    {
+      "name": "home/zh native artwork 13",
+      "passed": true
+    },
+    {
+      "name": "home/zh native dimensions not enlarged 13",
+      "passed": true
+    },
+    {
+      "name": "home/zh no old thumbnail 13",
+      "passed": true
+    },
+    {
+      "name": "home/zh valid same-site page links",
+      "passed": true
+    },
+    {
+      "name": "home/en HTTP 200",
+      "passed": true
+    },
+    {
+      "name": "home/en current build",
+      "passed": true
+    },
+    {
+      "name": "home/en exact source commit",
+      "passed": true
+    },
+    {
+      "name": "home/en page identity",
+      "passed": true
+    },
+    {
+      "name": "home/en language",
+      "passed": true
+    },
+    {
+      "name": "home/en one visible h1",
+      "passed": true
+    },
+    {
+      "name": "home/en no overflow at 1440",
+      "passed": true
+    },
+    {
+      "name": "home/en no overflow at 768",
+      "passed": true
+    },
+    {
+      "name": "home/en no overflow at 390",
+      "passed": true
+    },
+    {
+      "name": "home/en native artwork 0",
+      "passed": true
+    },
+    {
+      "name": "home/en native dimensions not enlarged 0",
+      "passed": true
+    },
+    {
+      "name": "home/en no old thumbnail 0",
+      "passed": true
+    },
+    {
+      "name": "home/en native artwork 1",
+      "passed": true
+    },
+    {
+      "name": "home/en native dimensions not enlarged 1",
+      "passed": true
+    },
+    {
+      "name": "home/en no old thumbnail 1",
+      "passed": true
+    },
+    {
+      "name": "home/en native artwork 2",
+      "passed": true
+    },
+    {
+      "name": "home/en native dimensions not enlarged 2",
+      "passed": true
+    },
+    {
+      "name": "home/en no old thumbnail 2",
+      "passed": true
+    },
+    {
+      "name": "home/en native artwork 3",
+      "passed": true
+    },
+    {
+      "name": "home/en native dimensions not enlarged 3",
+      "passed": true
+    },
+    {
+      "name": "home/en no old thumbnail 3",
+      "passed": true
+    },
+    {
+      "name": "home/en native artwork 4",
+      "passed": true
+    },
+    {
+      "name": "home/en native dimensions not enlarged 4",
+      "passed": true
+    },
+    {
+      "name": "home/en no old thumbnail 4",
+      "passed": true
+    },
+    {
+      "name": "home/en native artwork 5",
+      "passed": true
+    },
+    {
+      "name": "home/en native dimensions not enlarged 5",
+      "passed": true
+    },
+    {
+      "name": "home/en no old thumbnail 5",
+      "passed": true
+    },
+    {
+      "name": "home/en native artwork 6",
+      "passed": true
+    },
+    {
+      "name": "home/en native dimensions not enlarged 6",
+      "passed": true
+    },
+    {
+      "name": "home/en no old thumbnail 6",
+      "passed": true
+    },
+    {
+      "name": "home/en native artwork 7",
+      "passed": true
+    },
+    {
+      "name": "home/en native dimensions not enlarged 7",
+      "passed": true
+    },
+    {
+      "name": "home/en no old thumbnail 7",
+      "passed": true
+    },
+    {
+      "name": "home/en native artwork 8",
+      "passed": true
+    },
+    {
+      "name": "home/en native dimensions not enlarged 8",
+      "passed": true
+    },
+    {
+      "name": "home/en no old thumbnail 8",
+      "passed": true
+    },
+    {
+      "name": "home/en native artwork 9",
+      "passed": true
+    },
+    {
+      "name": "home/en native dimensions not enlarged 9",
+      "passed": true
+    },
+    {
+      "name": "home/en no old thumbnail 9",
+      "passed": true
+    },
+    {
+      "name": "home/en native artwork 10",
+      "passed": true
+    },
+    {
+      "name": "home/en native dimensions not enlarged 10",
+      "passed": true
+    },
+    {
+      "name": "home/en no old thumbnail 10",
+      "passed": true
+    },
+    {
+      "name": "home/en native artwork 11",
+      "passed": true
+    },
+    {
+      "name": "home/en native dimensions not enlarged 11",
+      "passed": true
+    },
+    {
+      "name": "home/en no old thumbnail 11",
+      "passed": true
+    },
+    {
+      "name": "home/en native artwork 12",
+      "passed": true
+    },
+    {
+      "name": "home/en native dimensions not enlarged 12",
+      "passed": true
+    },
+    {
+      "name": "home/en no old thumbnail 12",
+      "passed": true
+    },
+    {
+      "name": "home/en native artwork 13",
+      "passed": true
+    },
+    {
+      "name": "home/en native dimensions not enlarged 13",
+      "passed": true
+    },
+    {
+      "name": "home/en no old thumbnail 13",
+      "passed": true
+    },
+    {
+      "name": "home/en valid same-site page links",
+      "passed": true
+    },
+    {
+      "name": "home/en English UI has no leaked Chinese",
+      "passed": true
+    },
+    {
+      "name": "explore/zh HTTP 200",
+      "passed": true
+    },
+    {
+      "name": "explore/zh current build",
+      "passed": true
+    },
+    {
+      "name": "explore/zh exact source commit",
+      "passed": true
+    },
+    {
+      "name": "explore/zh page identity",
+      "passed": true
+    },
+    {
+      "name": "explore/zh language",
+      "passed": true
+    },
+    {
+      "name": "explore/zh one visible h1",
+      "passed": true
+    },
+    {
+      "name": "explore/zh no overflow at 1440",
+      "passed": true
+    },
+    {
+      "name": "explore/zh no overflow at 768",
+      "passed": true
+    },
+    {
+      "name": "explore/zh no overflow at 390",
+      "passed": true
+    },
+    {
+      "name": "explore/zh native artwork 0",
+      "passed": true
+    },
+    {
+      "name": "explore/zh native dimensions not enlarged 0",
+      "passed": true
+    },
+    {
+      "name": "explore/zh no old thumbnail 0",
+      "passed": true
+    },
+    {
+      "name": "explore/zh valid same-site page links",
+      "passed": true
+    },
+    {
+      "name": "explore/en HTTP 200",
+      "passed": true
+    },
+    {
+      "name": "explore/en current build",
+      "passed": true
+    },
+    {
+      "name": "explore/en exact source commit",
+      "passed": true
+    },
+    {
+      "name": "explore/en page identity",
+      "passed": true
+    },
+    {
+      "name": "explore/en language",
+      "passed": true
+    },
+    {
+      "name": "explore/en one visible h1",
+      "passed": true
+    },
+    {
+      "name": "explore/en no overflow at 1440",
+      "passed": true
+    },
+    {
+      "name": "explore/en no overflow at 768",
+      "passed": true
+    },
+    {
+      "name": "explore/en no overflow at 390",
+      "passed": true
+    },
+    {
+      "name": "explore/en native artwork 0",
+      "passed": true
+    },
+    {
+      "name": "explore/en native dimensions not enlarged 0",
+      "passed": true
+    },
+    {
+      "name": "explore/en no old thumbnail 0",
+      "passed": true
+    },
+    {
+      "name": "explore/en valid same-site page links",
+      "passed": true
+    },
+    {
+      "name": "explore/en English UI has no leaked Chinese",
+      "passed": true
+    },
+    {
+      "name": "lab/zh HTTP 200",
+      "passed": true
+    },
+    {
+      "name": "lab/zh current build",
+      "passed": true
+    },
+    {
+      "name": "lab/zh exact source commit",
+      "passed": true
+    },
+    {
+      "name": "lab/zh page identity",
+      "passed": true
+    },
+    {
+      "name": "lab/zh language",
+      "passed": true
+    },
+    {
+      "name": "lab/zh one visible h1",
+      "passed": true
+    },
+    {
+      "name": "lab/zh no overflow at 1440",
+      "passed": true
+    },
+    {
+      "name": "lab/zh no overflow at 768",
+      "passed": true
+    },
+    {
+      "name": "lab/zh no overflow at 390",
+      "passed": true
+    },
+    {
+      "name": "lab/zh native artwork 0",
+      "passed": true
+    },
+    {
+      "name": "lab/zh native dimensions not enlarged 0",
+      "passed": true
+    },
+    {
+      "name": "lab/zh no old thumbnail 0",
+      "passed": true
+    },
+    {
+      "name": "lab/zh valid same-site page links",
+      "passed": true
+    },
+    {
+      "name": "lab/en HTTP 200",
+      "passed": true
+    },
+    {
+      "name": "lab/en current build",
+      "passed": true
+    },
+    {
+      "name": "lab/en exact source commit",
+      "passed": true
+    },
+    {
+      "name": "lab/en page identity",
+      "passed": true
+    },
+    {
+      "name": "lab/en language",
+      "passed": true
+    },
+    {
+      "name": "lab/en one visible h1",
+      "passed": true
+    },
+    {
+      "name": "lab/en no overflow at 1440",
+      "passed": true
+    },
+    {
+      "name": "lab/en no overflow at 768",
+      "passed": true
+    },
+    {
+      "name": "lab/en no overflow at 390",
+      "passed": true
+    },
+    {
+      "name": "lab/en native artwork 0",
+      "passed": true
+    },
+    {
+      "name": "lab/en native dimensions not enlarged 0",
+      "passed": true
+    },
+    {
+      "name": "lab/en no old thumbnail 0",
+      "passed": true
+    },
+    {
+      "name": "lab/en valid same-site page links",
+      "passed": true
+    },
+    {
+      "name": "lab/en English UI has no leaked Chinese",
+      "passed": true
+    },
+    {
+      "name": "mind/zh HTTP 200",
+      "passed": true
+    },
+    {
+      "name": "mind/zh current build",
+      "passed": true
+    },
+    {
+      "name": "mind/zh exact source commit",
+      "passed": true
+    },
+    {
+      "name": "mind/zh page identity",
+      "passed": true
+    },
+    {
+      "name": "mind/zh language",
+      "passed": true
+    },
+    {
+      "name": "mind/zh one visible h1",
+      "passed": true
+    },
+    {
+      "name": "mind/zh no overflow at 1440",
+      "passed": true
+    },
+    {
+      "name": "mind/zh no overflow at 768",
+      "passed": true
+    },
+    {
+      "name": "mind/zh no overflow at 390",
+      "passed": true
+    },
+    {
+      "name": "mind/zh native artwork 0",
+      "passed": true
+    },
+    {
+      "name": "mind/zh native dimensions not enlarged 0",
+      "passed": true
+    },
+    {
+      "name": "mind/zh no old thumbnail 0",
+      "passed": true
+    },
+    {
+      "name": "mind/zh valid same-site page links",
+      "passed": true
+    },
+    {
+      "name": "mind/en HTTP 200",
+      "passed": true
+    },
+    {
+      "name": "mind/en current build",
+      "passed": true
+    },
+    {
+      "name": "mind/en exact source commit",
+      "passed": true
+    },
+    {
+      "name": "mind/en page identity",
+      "passed": true
+    },
+    {
+      "name": "mind/en language",
+      "passed": true
+    },
+    {
+      "name": "mind/en one visible h1",
+      "passed": true
+    },
+    {
+      "name": "mind/en no overflow at 1440",
+      "passed": true
+    },
+    {
+      "name": "mind/en no overflow at 768",
+      "passed": true
+    },
+    {
+      "name": "mind/en no overflow at 390",
+      "passed": true
+    },
+    {
+      "name": "mind/en native artwork 0",
+      "passed": true
+    },
+    {
+      "name": "mind/en native dimensions not enlarged 0",
+      "passed": true
+    },
+    {
+      "name": "mind/en no old thumbnail 0",
+      "passed": true
+    },
+    {
+      "name": "mind/en valid same-site page links",
+      "passed": true
+    },
+    {
+      "name": "mind/en English UI has no leaked Chinese",
+      "passed": true
+    },
+    {
+      "name": "stories/zh HTTP 200",
+      "passed": true
+    },
+    {
+      "name": "stories/zh current build",
+      "passed": true
+    },
+    {
+      "name": "stories/zh exact source commit",
+      "passed": true
+    },
+    {
+      "name": "stories/zh page identity",
+      "passed": true
+    },
+    {
+      "name": "stories/zh language",
+      "passed": true
+    },
+    {
+      "name": "stories/zh one visible h1",
+      "passed": true
+    },
+    {
+      "name": "stories/zh no overflow at 1440",
+      "passed": true
+    },
+    {
+      "name": "stories/zh no overflow at 768",
+      "passed": true
+    },
+    {
+      "name": "stories/zh no overflow at 390",
+      "passed": true
+    },
+    {
+      "name": "stories/zh native artwork 0",
+      "passed": true
+    },
+    {
+      "name": "stories/zh native dimensions not enlarged 0",
+      "passed": true
+    },
+    {
+      "name": "stories/zh no old thumbnail 0",
+      "passed": true
+    },
+    {
+      "name": "stories/zh valid same-site page links",
+      "passed": true
+    },
+    {
+      "name": "stories/en HTTP 200",
+      "passed": true
+    },
+    {
+      "name": "stories/en current build",
+      "passed": true
+    },
+    {
+      "name": "stories/en exact source commit",
+      "passed": true
+    },
+    {
+      "name": "stories/en page identity",
+      "passed": true
+    },
+    {
+      "name": "stories/en language",
+      "passed": true
+    },
+    {
+      "name": "stories/en one visible h1",
+      "passed": true
+    },
+    {
+      "name": "stories/en no overflow at 1440",
+      "passed": true
+    },
+    {
+      "name": "stories/en no overflow at 768",
+      "passed": true
+    },
+    {
+      "name": "stories/en no overflow at 390",
+      "passed": true
+    },
+    {
+      "name": "stories/en native artwork 0",
+      "passed": true
+    },
+    {
+      "name": "stories/en native dimensions not enlarged 0",
+      "passed": true
+    },
+    {
+      "name": "stories/en no old thumbnail 0",
+      "passed": true
+    },
+    {
+      "name": "stories/en valid same-site page links",
+      "passed": true
+    },
+    {
+      "name": "stories/en English UI has no leaked Chinese",
+      "passed": true
+    },
+    {
+      "name": "play/zh HTTP 200",
+      "passed": true
+    },
+    {
+      "name": "play/zh current build",
+      "passed": true
+    },
+    {
+      "name": "play/zh exact source commit",
+      "passed": true
+    },
+    {
+      "name": "play/zh page identity",
+      "passed": true
+    },
+    {
+      "name": "play/zh language",
+      "passed": true
+    },
+    {
+      "name": "play/zh one visible h1",
+      "passed": true
+    },
+    {
+      "name": "play/zh no overflow at 1440",
+      "passed": true
+    },
+    {
+      "name": "play/zh no overflow at 768",
+      "passed": true
+    },
+    {
+      "name": "play/zh no overflow at 390",
+      "passed": true
+    },
+    {
+      "name": "play/zh native artwork 0",
+      "passed": true
+    },
+    {
+      "name": "play/zh native dimensions not enlarged 0",
+      "passed": true
+    },
+    {
+      "name": "play/zh no old thumbnail 0",
+      "passed": true
+    },
+    {
+      "name": "play/zh valid same-site page links",
+      "passed": true
+    },
+    {
+      "name": "play/en HTTP 200",
+      "passed": true
+    },
+    {
+      "name": "play/en current build",
+      "passed": true
+    },
+    {
+      "name": "play/en exact source commit",
+      "passed": true
+    },
+    {
+      "name": "play/en page identity",
+      "passed": true
+    },
+    {
+      "name": "play/en language",
+      "passed": true
+    },
+    {
+      "name": "play/en one visible h1",
+      "passed": true
+    },
+    {
+      "name": "play/en no overflow at 1440",
+      "passed": true
+    },
+    {
+      "name": "play/en no overflow at 768",
+      "passed": true
+    },
+    {
+      "name": "play/en no overflow at 390",
+      "passed": true
+    },
+    {
+      "name": "play/en native artwork 0",
+      "passed": true
+    },
+    {
+      "name": "play/en native dimensions not enlarged 0",
+      "passed": true
+    },
+    {
+      "name": "play/en no old thumbnail 0",
+      "passed": true
+    },
+    {
+      "name": "play/en valid same-site page links",
+      "passed": true
+    },
+    {
+      "name": "play/en English UI has no leaked Chinese",
+      "passed": true
+    },
+    {
+      "name": "community/zh HTTP 200",
+      "passed": true
+    },
+    {
+      "name": "community/zh current build",
+      "passed": true
+    },
+    {
+      "name": "community/zh exact source commit",
+      "passed": true
+    },
+    {
+      "name": "community/zh page identity",
+      "passed": true
+    },
+    {
+      "name": "community/zh language",
+      "passed": true
+    },
+    {
+      "name": "community/zh one visible h1",
+      "passed": true
+    },
+    {
+      "name": "community/zh no overflow at 1440",
+      "passed": true
+    },
+    {
+      "name": "community/zh no overflow at 768",
+      "passed": true
+    },
+    {
+      "name": "community/zh no overflow at 390",
+      "passed": true
+    },
+    {
+      "name": "community/zh native artwork 0",
+      "passed": true
+    },
+    {
+      "name": "community/zh native dimensions not enlarged 0",
+      "passed": true
+    },
+    {
+      "name": "community/zh no old thumbnail 0",
+      "passed": true
+    },
+    {
+      "name": "community/zh native artwork 1",
+      "passed": true
+    },
+    {
+      "name": "community/zh native dimensions not enlarged 1",
+      "passed": true
+    },
+    {
+      "name": "community/zh no old thumbnail 1",
+      "passed": true
+    },
+    {
+      "name": "community/zh native artwork 2",
+      "passed": true
+    },
+    {
+      "name": "community/zh native dimensions not enlarged 2",
+      "passed": true
+    },
+    {
+      "name": "community/zh no old thumbnail 2",
+      "passed": true
+    },
+    {
+      "name": "community/zh native artwork 3",
+      "passed": true
+    },
+    {
+      "name": "community/zh native dimensions not enlarged 3",
+      "passed": true
+    },
+    {
+      "name": "community/zh no old thumbnail 3",
+      "passed": true
+    },
+    {
+      "name": "community/zh valid same-site page links",
+      "passed": true
+    },
+    {
+      "name": "community/en HTTP 200",
+      "passed": true
+    },
+    {
+      "name": "community/en current build",
+      "passed": true
+    },
+    {
+      "name": "community/en exact source commit",
+      "passed": true
+    },
+    {
+      "name": "community/en page identity",
+      "passed": true
+    },
+    {
+      "name": "community/en language",
+      "passed": true
+    },
+    {
+      "name": "community/en one visible h1",
+      "passed": true
+    },
+    {
+      "name": "community/en no overflow at 1440",
+      "passed": true
+    },
+    {
+      "name": "community/en no overflow at 768",
+      "passed": true
+    },
+    {
+      "name": "community/en no overflow at 390",
+      "passed": true
+    },
+    {
+      "name": "community/en native artwork 0",
+      "passed": true
+    },
+    {
+      "name": "community/en native dimensions not enlarged 0",
+      "passed": true
+    },
+    {
+      "name": "community/en no old thumbnail 0",
+      "passed": true
+    },
+    {
+      "name": "community/en native artwork 1",
+      "passed": true
+    },
+    {
+      "name": "community/en native dimensions not enlarged 1",
+      "passed": true
+    },
+    {
+      "name": "community/en no old thumbnail 1",
+      "passed": true
+    },
+    {
+      "name": "community/en native artwork 2",
+      "passed": true
+    },
+    {
+      "name": "community/en native dimensions not enlarged 2",
+      "passed": true
+    },
+    {
+      "name": "community/en no old thumbnail 2",
+      "passed": true
+    },
+    {
+      "name": "community/en native artwork 3",
+      "passed": true
+    },
+    {
+      "name": "community/en native dimensions not enlarged 3",
+      "passed": true
+    },
+    {
+      "name": "community/en no old thumbnail 3",
+      "passed": true
+    },
+    {
+      "name": "community/en valid same-site page links",
+      "passed": true
+    },
+    {
+      "name": "community/en English UI has no leaked Chinese",
+      "passed": true
+    },
+    {
+      "name": "journey/zh HTTP 200",
+      "passed": true
+    },
+    {
+      "name": "journey/zh current build",
+      "passed": true
+    },
+    {
+      "name": "journey/zh exact source commit",
+      "passed": true
+    },
+    {
+      "name": "journey/zh page identity",
+      "passed": true
+    },
+    {
+      "name": "journey/zh language",
+      "passed": true
+    },
+    {
+      "name": "journey/zh one visible h1",
+      "passed": true
+    },
+    {
+      "name": "journey/zh no overflow at 1440",
+      "passed": true
+    },
+    {
+      "name": "journey/zh no overflow at 768",
+      "passed": true
+    },
+    {
+      "name": "journey/zh no overflow at 390",
+      "passed": true
+    },
+    {
+      "name": "journey/zh native artwork 0",
+      "passed": true
+    },
+    {
+      "name": "journey/zh native dimensions not enlarged 0",
+      "passed": true
+    },
+    {
+      "name": "journey/zh no old thumbnail 0",
+      "passed": true
+    },
+    {
+      "name": "journey/zh valid same-site page links",
+      "passed": true
+    },
+    {
+      "name": "journey/en HTTP 200",
+      "passed": true
+    },
+    {
+      "name": "journey/en current build",
+      "passed": true
+    },
+    {
+      "name": "journey/en exact source commit",
+      "passed": true
+    },
+    {
+      "name": "journey/en page identity",
+      "passed": true
+    },
+    {
+      "name": "journey/en language",
+      "passed": true
+    },
+    {
+      "name": "journey/en one visible h1",
+      "passed": true
+    },
+    {
+      "name": "journey/en no overflow at 1440",
+      "passed": true
+    },
+    {
+      "name": "journey/en no overflow at 768",
+      "passed": true
+    },
+    {
+      "name": "journey/en no overflow at 390",
+      "passed": true
+    },
+    {
+      "name": "journey/en native artwork 0",
+      "passed": true
+    },
+    {
+      "name": "journey/en native dimensions not enlarged 0",
+      "passed": true
+    },
+    {
+      "name": "journey/en no old thumbnail 0",
+      "passed": true
+    },
+    {
+      "name": "journey/en valid same-site page links",
+      "passed": true
+    },
+    {
+      "name": "journey/en English UI has no leaked Chinese",
+      "passed": true
+    },
+    {
+      "name": "sources/zh HTTP 200",
+      "passed": true
+    },
+    {
+      "name": "sources/zh current build",
+      "passed": true
+    },
+    {
+      "name": "sources/zh exact source commit",
+      "passed": true
+    },
+    {
+      "name": "sources/zh page identity",
+      "passed": true
+    },
+    {
+      "name": "sources/zh language",
+      "passed": true
+    },
+    {
+      "name": "sources/zh one visible h1",
+      "passed": true
+    },
+    {
+      "name": "sources/zh no overflow at 1440",
+      "passed": true
+    },
+    {
+      "name": "sources/zh no overflow at 768",
+      "passed": true
+    },
+    {
+      "name": "sources/zh no overflow at 390",
+      "passed": true
+    },
+    {
+      "name": "sources/zh native artwork 0",
+      "passed": true
+    },
+    {
+      "name": "sources/zh native dimensions not enlarged 0",
+      "passed": true
+    },
+    {
+      "name": "sources/zh no old thumbnail 0",
+      "passed": true
+    },
+    {
+      "name": "sources/zh valid same-site page links",
+      "passed": true
+    },
+    {
+      "name": "sources/en HTTP 200",
+      "passed": true
+    },
+    {
+      "name": "sources/en current build",
+      "passed": true
+    },
+    {
+      "name": "sources/en exact source commit",
+      "passed": true
+    },
+    {
+      "name": "sources/en page identity",
+      "passed": true
+    },
+    {
+      "name": "sources/en language",
+      "passed": true
+    },
+    {
+      "name": "sources/en one visible h1",
+      "passed": true
+    },
+    {
+      "name": "sources/en no overflow at 1440",
+      "passed": true
+    },
+    {
+      "name": "sources/en no overflow at 768",
+      "passed": true
+    },
+    {
+      "name": "sources/en no overflow at 390",
+      "passed": true
+    },
+    {
+      "name": "sources/en native artwork 0",
+      "passed": true
+    },
+    {
+      "name": "sources/en native dimensions not enlarged 0",
+      "passed": true
+    },
+    {
+      "name": "sources/en no old thumbnail 0",
+      "passed": true
+    },
+    {
+      "name": "sources/en valid same-site page links",
+      "passed": true
+    },
+    {
+      "name": "sources/en English UI has no leaked Chinese",
+      "passed": true
+    },
+    {
+      "name": "about/zh HTTP 200",
+      "passed": true
+    },
+    {
+      "name": "about/zh current build",
+      "passed": true
+    },
+    {
+      "name": "about/zh exact source commit",
+      "passed": true
+    },
+    {
+      "name": "about/zh page identity",
+      "passed": true
+    },
+    {
+      "name": "about/zh language",
+      "passed": true
+    },
+    {
+      "name": "about/zh one visible h1",
+      "passed": true
+    },
+    {
+      "name": "about/zh no overflow at 1440",
+      "passed": true
+    },
+    {
+      "name": "about/zh no overflow at 768",
+      "passed": true
+    },
+    {
+      "name": "about/zh no overflow at 390",
+      "passed": true
+    },
+    {
+      "name": "about/zh native artwork 0",
+      "passed": true
+    },
+    {
+      "name": "about/zh native dimensions not enlarged 0",
+      "passed": true
+    },
+    {
+      "name": "about/zh no old thumbnail 0",
+      "passed": true
+    },
+    {
+      "name": "about/zh valid same-site page links",
+      "passed": true
+    },
+    {
+      "name": "about/en HTTP 200",
+      "passed": true
+    },
+    {
+      "name": "about/en current build",
+      "passed": true
+    },
+    {
+      "name": "about/en exact source commit",
+      "passed": true
+    },
+    {
+      "name": "about/en page identity",
+      "passed": true
+    },
+    {
+      "name": "about/en language",
+      "passed": true
+    },
+    {
+      "name": "about/en one visible h1",
+      "passed": true
+    },
+    {
+      "name": "about/en no overflow at 1440",
+      "passed": true
+    },
+    {
+      "name": "about/en no overflow at 768",
+      "passed": true
+    },
+    {
+      "name": "about/en no overflow at 390",
+      "passed": true
+    },
+    {
+      "name": "about/en native artwork 0",
+      "passed": true
+    },
+    {
+      "name": "about/en native dimensions not enlarged 0",
+      "passed": true
+    },
+    {
+      "name": "about/en no old thumbnail 0",
+      "passed": true
+    },
+    {
+      "name": "about/en valid same-site page links",
+      "passed": true
+    },
+    {
+      "name": "about/en English UI has no leaked Chinese",
+      "passed": true
+    },
+    {
+      "name": "entanglement/zh HTTP 200",
+      "passed": true
+    },
+    {
+      "name": "entanglement/zh current build",
+      "passed": true
+    },
+    {
+      "name": "entanglement/zh exact source commit",
+      "passed": true
+    },
+    {
+      "name": "entanglement/zh page identity",
+      "passed": true
+    },
+    {
+      "name": "entanglement/zh language",
+      "passed": true
+    },
+    {
+      "name": "entanglement/zh one visible h1",
+      "passed": true
+    },
+    {
+      "name": "entanglement/zh no overflow at 1440",
+      "passed": true
+    },
+    {
+      "name": "entanglement/zh no overflow at 768",
+      "passed": true
+    },
+    {
+      "name": "entanglement/zh no overflow at 390",
+      "passed": true
+    },
+    {
+      "name": "entanglement/zh native artwork 0",
+      "passed": true
+    },
+    {
+      "name": "entanglement/zh native dimensions not enlarged 0",
+      "passed": true
+    },
+    {
+      "name": "entanglement/zh no old thumbnail 0",
+      "passed": true
+    },
+    {
+      "name": "entanglement/zh valid same-site page links",
+      "passed": true
+    },
+    {
+      "name": "entanglement/en HTTP 200",
+      "passed": true
+    },
+    {
+      "name": "entanglement/en current build",
+      "passed": true
+    },
+    {
+      "name": "entanglement/en exact source commit",
+      "passed": true
+    },
+    {
+      "name": "entanglement/en page identity",
+      "passed": true
+    },
+    {
+      "name": "entanglement/en language",
+      "passed": true
+    },
+    {
+      "name": "entanglement/en one visible h1",
+      "passed": true
+    },
+    {
+      "name": "entanglement/en no overflow at 1440",
+      "passed": true
+    },
+    {
+      "name": "entanglement/en no overflow at 768",
+      "passed": true
+    },
+    {
+      "name": "entanglement/en no overflow at 390",
+      "passed": true
+    },
+    {
+      "name": "entanglement/en native artwork 0",
+      "passed": true
+    },
+    {
+      "name": "entanglement/en native dimensions not enlarged 0",
+      "passed": true
+    },
+    {
+      "name": "entanglement/en no old thumbnail 0",
+      "passed": true
+    },
+    {
+      "name": "entanglement/en valid same-site page links",
+      "passed": true
+    },
+    {
+      "name": "entanglement/en English UI has no leaked Chinese",
+      "passed": true
+    },
+    {
+      "name": "24 concept cards",
+      "passed": true
+    },
+    {
+      "name": "Bilingual concept search",
+      "passed": true
+    },
+    {
+      "name": "Concept dialog",
+      "passed": true
+    },
+    {
+      "name": "Reading progress persisted",
+      "passed": true
+    },
+    {
+      "name": "Category filter",
+      "passed": true
+    },
+    {
+      "name": "SVG export",
+      "passed": true
+    },
+    {
+      "name": "Learning route switches",
+      "passed": true
+    },
+    {
+      "name": "Reading progress shared across pages",
+      "passed": true
+    },
+    {
+      "name": "Double slit sampling",
+      "passed": true
+    },
+    {
+      "name": "Samples survive language switch",
+      "passed": true
+    },
+    {
+      "name": "Which-path behavior",
+      "passed": true
+    },
+    {
+      "name": "Destructive interference",
+      "passed": true
+    },
+    {
+      "name": "Uncertainty product",
+      "passed": true
+    },
+    {
+      "name": "Bell ideal maximum",
+      "passed": true
+    },
+    {
+      "name": "Pair samples",
+      "passed": true
+    },
+    {
+      "name": "Retina canvas backing resolution",
+      "passed": true
+    },
+    {
+      "name": "Canvas redraw after resizing",
+      "passed": true
+    },
+    {
+      "name": "Experiment parameters survive page navigation",
+      "passed": true
+    },
+    {
+      "name": "Quiz scoring",
+      "passed": true
+    },
+    {
+      "name": "Quiz answers survive language switch",
+      "passed": true
+    },
+    {
+      "name": "Local notebook truthfully labelled",
+      "passed": true
+    },
+    {
+      "name": "Unsaved notebook survives language switch",
+      "passed": true
+    },
+    {
+      "name": "Saved notebook survives reload",
+      "passed": true
+    },
+    {
+      "name": "Notebook export bytes",
+      "passed": true
+    },
+    {
+      "name": "20 source entries",
+      "passed": true
+    },
+    {
+      "name": "Old deep link migrates",
+      "passed": true
+    },
+    {
+      "name": "Mobile menu opens",
+      "passed": true
+    },
+    {
+      "name": "Escape closes mobile menu",
+      "passed": true
+    },
+    {
+      "name": "No JavaScript errors",
+      "passed": true
+    }
+  ],
+  "javascript_errors": [],
+  "http_attempts": [
+    {
+      "url": "https://quriatlas.saga1001.com/index.html?lang=zh",
+      "status": 200,
+      "attempt": 1
+    },
+    {
+      "url": "https://quriatlas.saga1001.com/index.html?lang=en",
+      "status": 200,
+      "attempt": 1
+    },
+    {
+      "url": "https://quriatlas.saga1001.com/explore.html?lang=zh",
+      "status": 200,
+      "attempt": 1
+    },
+    {
+      "url": "https://quriatlas.saga1001.com/explore.html?lang=en",
+      "status": 200,
+      "attempt": 1
+    },
+    {
+      "url": "https://quriatlas.saga1001.com/lab.html?lang=zh",
+      "status": 200,
+      "attempt": 1
+    },
+    {
+      "url": "https://quriatlas.saga1001.com/lab.html?lang=en",
+      "status": 200,
+      "attempt": 1
+    },
+    {
+      "url": "https://quriatlas.saga1001.com/mind.html?lang=zh",
+      "status": 200,
+      "attempt": 1
+    },
+    {
+      "url": "https://quriatlas.saga1001.com/mind.html?lang=en",
+      "status": 200,
+      "attempt": 1
+    },
+    {
+      "url": "https://quriatlas.saga1001.com/stories.html?lang=zh",
+      "status": 200,
+      "attempt": 1
+    },
+    {
+      "url": "https://quriatlas.saga1001.com/stories.html?lang=en",
+      "status": 200,
+      "attempt": 1
+    },
+    {
+      "url": "https://quriatlas.saga1001.com/play.html?lang=zh",
+      "status": 200,
+      "attempt": 1
+    },
+    {
+      "url": "https://quriatlas.saga1001.com/play.html?lang=en",
+      "status": 200,
+      "attempt": 1
+    },
+    {
+      "url": "https://quriatlas.saga1001.com/community.html?lang=zh",
+      "status": 200,
+      "attempt": 1
+    },
+    {
+      "url": "https://quriatlas.saga1001.com/community.html?lang=en",
+      "status": 200,
+      "attempt": 1
+    },
+    {
+      "url": "https://quriatlas.saga1001.com/journey.html?lang=zh",
+      "status": 200,
+      "attempt": 1
+    },
+    {
+      "url": "https://quriatlas.saga1001.com/journey.html?lang=en",
+      "status": 200,
+      "attempt": 1
+    },
+    {
+      "url": "https://quriatlas.saga1001.com/sources.html?lang=zh",
+      "status": 200,
+      "attempt": 1
+    },
+    {
+      "url": "https://quriatlas.saga1001.com/sources.html?lang=en",
+      "status": 200,
+      "attempt": 1
+    },
+    {
+      "url": "https://quriatlas.saga1001.com/about.html?lang=zh",
+      "status": 200,
+      "attempt": 1
+    },
+    {
+      "url": "https://quriatlas.saga1001.com/about.html?lang=en",
+      "status": 200,
+      "attempt": 1
+    },
+    {
+      "url": "https://quriatlas.saga1001.com/entanglement.html?lang=zh",
+      "status": 200,
+      "attempt": 1
+    },
+    {
+      "url": "https://quriatlas.saga1001.com/entanglement.html?lang=en",
+      "status": 200,
+      "attempt": 1
+    },
+    {
+      "url": "https://quriatlas.saga1001.com/explore.html?lang=zh",
+      "status": 200,
+      "attempt": 1
+    },
+    {
+      "url": "https://quriatlas.saga1001.com/journey.html?lang=zh",
+      "status": 200,
+      "attempt": 1
+    },
+    {
+      "url": "https://quriatlas.saga1001.com/lab.html?lang=zh",
+      "status": 200,
+      "attempt": 1
+    },
+    {
+      "url": "https://quriatlas.saga1001.com/about.html?lang=en",
+      "status": 200,
+      "attempt": 1
+    },
+    {
+      "url": "https://quriatlas.saga1001.com/lab.html?lang=en",
+      "status": 200,
+      "attempt": 1
+    },
+    {
+      "url": "https://quriatlas.saga1001.com/play.html?lang=en",
+      "status": 200,
+      "attempt": 1
+    },
+    {
+      "url": "https://quriatlas.saga1001.com/community.html?lang=en",
+      "status": 200,
+      "attempt": 1
+    },
+    {
+      "url": "https://quriatlas.saga1001.com/community.html?lang=en",
+      "status": 200,
+      "attempt": 1
+    },
+    {
+      "url": "https://quriatlas.saga1001.com/sources.html?lang=en",
+      "status": 200,
+      "attempt": 1
+    },
+    {
+      "url": "https://quriatlas.saga1001.com/index.html?lang=en",
+      "status": 200,
+      "attempt": 1
+    }
+  ],
+  "request_failures": [],
+  "screenshots": [
+    "home-zh-desktop.png",
+    "home-zh-mobile.png",
+    "home-en-desktop.png",
+    "explore-zh-desktop.png",
+    "explore-zh-mobile.png",
+    "explore-en-desktop.png",
+    "lab-zh-desktop.png",
+    "lab-zh-mobile.png",
+    "lab-en-desktop.png",
+    "mind-zh-desktop.png",
+    "mind-zh-mobile.png",
+    "mind-en-desktop.png",
+    "stories-zh-desktop.png",
+    "stories-zh-mobile.png",
+    "stories-en-desktop.png",
+    "play-zh-desktop.png",
+    "play-zh-mobile.png",
+    "play-en-desktop.png",
+    "community-zh-desktop.png",
+    "community-zh-mobile.png",
+    "community-en-desktop.png",
+    "journey-zh-desktop.png",
+    "journey-zh-mobile.png",
+    "journey-en-desktop.png",
+    "sources-zh-desktop.png",
+    "sources-zh-mobile.png",
+    "sources-en-desktop.png",
+    "about-zh-desktop.png",
+    "about-zh-mobile.png",
+    "about-en-desktop.png",
+    "entanglement-zh-desktop.png",
+    "entanglement-zh-mobile.png",
+    "entanglement-en-desktop.png",
+    "lab-en-mobile-full.png"
+  ],
+  "widths": [
+    1440,
+    768,
+    390
+  ],
+  "device_scale_factor": 2,
+  "screenshot_scale": "css"
+}
