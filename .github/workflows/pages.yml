@@ -105,7 +105,7 @@ jobs:
               try:
                   with urllib.request.urlopen(url+'?verify='+str(time.time_ns()),timeout=20) as r:
                       body=r.read()
-                      if r.status==200 and b'0.4.0-atlantis-cinematic' in body:
+                      if r.status==200 and b'0.5.0-atlantis-home' in body:
                           print('Public QuriAtlas build verified.')
                           break
               except Exception as e:
@@ -120,7 +120,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: quriatlas-atlantis-cinematic
+          name: quriatlas-atlantis-home
           path: |
             build/qa-local/
             build/qa-public/
