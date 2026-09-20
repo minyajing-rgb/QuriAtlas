@@ -26,7 +26,7 @@ page='''<!doctype html>
 <meta name="color-scheme" content="light"><meta name="theme-color" content="#f7faff">
 <title>QuriAtlas｜量子漫游 · Interactive Quantum Physics</title>
 <meta name="description" content="Bilingual interactive quantum physics atlas with stories, experiments, evidence trails and a cinematic Atlantis-inspired visual world.">
-<meta name="quri-build" content="0.4.0-atlantis-cinematic">
+<meta name="quri-build" content="0.5.0-atlantis-home">
 <style>'''+css+'''</style></head><body>
 <div id="app"></div><dialog id="entryDialog"></dialog>
 <noscript>This interactive atlas requires JavaScript. 本互动知识地图需要启用 JavaScript。</noscript>
@@ -35,4 +35,4 @@ page='''<!doctype html>
 <script>'''+js+'''</script></body></html>'''
 
 (ROOT/'index.html').write_text(page,encoding='utf-8')
-print(json.dumps({'build':'0.4.0-atlantis-cinematic','concepts':len(data['entries']),'sources':len(data['sources']),'bytes':len(page.encode()),'sha256':hashlib.sha256(page.encode()).hexdigest()}))
+print(json.dumps({'build':'0.5.0-atlantis-home','concepts':len(data['entries']),'sources':len(data['sources']),'bytes':len(page.encode()),'sha256':hashlib.sha256(page.encode()).hexdigest()}))
