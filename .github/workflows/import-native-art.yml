@@ -1,0 +1,38 @@
+name: Import native QuriAtlas art
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/import-native-art.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: quriatlas-art-import
+  cancel-in-progress: false
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: main
+      - run: python -m pip install Pillow
+      - name: Import complete artwork and validate dimensions
+        run: python ops/import_art.py
+      - name: Commit all approved images
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add assets/art
+          if ! git diff --cached --quiet; then
+            git commit -m 'art: archive nine original-size approved scenes and production crops'
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: quri-native-art
+          path: assets/art/
+          retention-days: 7
