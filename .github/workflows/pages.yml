@@ -62,7 +62,7 @@ jobs:
           mkdir -p build/public/assets
           cp index.html build/public/index.html
           cp assets/hero-atlantis.webp build/public/assets/hero-atlantis.webp
-          cp assets/knowledge-map.svg build/public/assets/knowledge-map.svg
+          cp assets/knowledge-map.svg build/public/assets/knowledge-map.svg\n          cp CNAME build/public/CNAME
           touch build/public/.nojekyll
 
       - name: Check whether GitHub Pages is enabled
