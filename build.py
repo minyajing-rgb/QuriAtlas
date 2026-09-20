@@ -52,8 +52,12 @@ def main():
     names = [r['web_file'].split('/')[-1] for r in art['records']] + ['home-scene.webp','web-manifest.json']
     for name in names: shutil.copy2(ROOT/'assets/art'/name,stage/'assets/art'/name)
     shutil.copy2(ROOT/'CNAME', stage/'CNAME'); (stage/'.nojekyll').touch(); (ROOT/'.nojekyll').touch()
+    # Pages consumes these provisioning files; upload-pages-artifact omits dotfiles.
+    # Keep configuration intact, but fingerprint only resources the public site serves.
+    deployment_metadata = {'CNAME', '.nojekyll'}
     release = {'version':RELEASE,'source_commit':commit,'pages':PAGES,'concepts':len(data['entries']),'sources':len(data['sources']),'artworks':9,
-        'files':{str(f.relative_to(stage)):sha(f) for f in sorted(stage.rglob('*')) if f.is_file()},
+        'files':{str(f.relative_to(stage)):sha(f) for f in sorted(stage.rglob('*')) if f.is_file() and f.name not in deployment_metadata},
+        'deployment_metadata':sorted(deployment_metadata),
         'scope':'Bilingual educational static site. Local notebook only; not a public forum.'}
     for p in (ROOT/'release.json',stage/'release.json'): p.write_text(json.dumps(release,indent=2),encoding='utf-8')
     print(json.dumps({'version':RELEASE,'source_commit':commit,'pages':len(PAGES),'artworks':9,'fingerprinted_files':len(release['files'])}))
